@@ -1,0 +1,105 @@
+:root {
+  /* default theme color */
+  /* can be overrided by uses `themeConfig` option */
+  --slidev-theme-primary: #5d8392;
+}
+
+SlideCurrentNo {
+  position: absolute;
+  bottom: 32px;
+}
+
+h2 {
+  margin-top: 32px;
+}
+
+.slidev-layout.cover {
+  text-align: end;
+  background-color: whitesmoke;
+
+}
+
+.slidev-layout.intro {
+  background-color: whitesmoke;
+}
+
+.slidev-layout.default {
+  background-color: whitesmoke;
+}
+
+.logo {
+  width: 300px;
+  float: left;
+}
+
+.bottompanel {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  height: 24px;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  align-content: center;
+  text-align: end;
+}
+
+.slidev-layout.section {
+  background-color: black;
+  text-align: end;
+  align-items: center;
+  h1 {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    right: 0%;
+    padding: 32px;
+    color: whitesmoke;
+    font-weight: bolder;
+    text-align: end;
+    color: #fdcb0b;
+    font-size: 42px;
+    transform: translateY(-50%);
+
+  }
+  img {
+    vertical-align: middle;
+    width: 450px;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 32px;
+    top: auto;
+    bottom: auto;
+    transform: translateY(50%);
+    border-image: linear-gradient(#fdcb0b, #fdcb0b) 30;
+    border-width: 4px;
+    border-style: solid;
+  }
+}
+
+.bottompanel {
+  background-color: #fdcb0b;
+  position: absolute;
+  align-items: end;
+}
+
+.slidev-layout.cover,
+.slidev-layout.intro {
+  @apply h-full grid;
+
+  h1 {
+    @apply text-6xl leading-20;
+  }
+
+  h1 + p {
+    @apply -mt-2 opacity-50 mb-4;
+  }
+
+  p + h2,
+  ul + h2,
+  table + h2 {
+    @apply mt-10;
+  }
+}
