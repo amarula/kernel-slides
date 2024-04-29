@@ -1,0 +1,16 @@
+{
+  "name": "regmap",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.49.0-beta.4",
+    "@slidev/theme-apple-basic": "^0.25.1",
+    "playwright-chromium": "^1.43.1",
+    "vue": "^3.4.22"
+  }
+}

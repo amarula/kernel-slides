@@ -13,3 +13,11 @@ allows us to have a common template, to be able to export slides in a very fast
 way and to review them as text, allowing us to use git to correct us without
 doing it "the old way" (not as old as saving them on ~~floppy disks~~ USB
 devices and passing them around).
+
+## How to start with slide
+
+To start the slide show:
+
+- `npm install`
+- `run dev drivers/base/regmap/regmap.md`
+- visit http://localhost:3030
