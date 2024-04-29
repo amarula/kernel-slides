@@ -527,11 +527,17 @@ about devres! :)
 ---
 layout: center
 title: ' '
+<<<<<<< HEAD
 background: 'https://www.amarulasolutions.com/wp-content/uploads/2023/12/Team_Foto_2023-1.jpg'
+=======
+>>>>>>> 98b9cb1 (regmap: Add slides about regmap)
 ---
 
 # Thank you!
 
+<<<<<<< HEAD
 ![](images/logo.png){width=150px}
 
 
+=======
+>>>>>>> 98b9cb1 (regmap: Add slides about regmap)
