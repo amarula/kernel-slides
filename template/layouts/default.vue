@@ -1,18 +1,10 @@
 <template>
-  <div class="slidev-layout default">
-    <img src="../images/amarula.svg" class="logo-topright"/>
-    <div class="my-auto">
-      <slot />
-    </div>
-  </div>
-  <table class="bottompanel">
-      <tr>
-        <th style="text-align:left; padding-left:8px;">
-          <a href="https://www.amarulasolutions.com">www.amarulasolutions.com</a>
-        </th>
-        <th>
+        <div class="slidev-layout default">
+          <div class="my-auto">
+            <slot />
+          </div>
+        </div>
+        <div class="bottompanel">
           <SlideCurrentNo />
-        </th>
-      </tr>
-  </table>
-</template>
+        </div>
+      </template>
