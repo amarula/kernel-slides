@@ -40,11 +40,6 @@
   padding: 32px;
 }
 
-SlideCurrentNo {
-  position: absolute;
-  bottom: 32px;
-}
-
 h2 {
   margin-top: 32px;
 }
@@ -53,7 +48,6 @@ h2 {
   text-align: end;
 
 }
-
 
 .logo {
   width: 300px;
@@ -77,6 +71,7 @@ h2 {
 
 .bottompanel {
   position: absolute;
+  left: 0px;
   right: 0px;
   bottom: 0px;
   height: 32px;
@@ -84,12 +79,10 @@ h2 {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 16px;
+  padding-left: 16px;
   font-size: 16px;
   background-color: #fdcb0b;
   font-weight: bold;
-  align-content: center;
-  text-align: end;
-  align-items: end;
 }
 
 .slidev-layout.section {
