@@ -14,6 +14,7 @@ const props = defineProps({
 <template>
   <div class="grid grid-cols-2 w-full h-full">
     <div class="slidev-layout default image-right" :class="props.class">
+    <img src="../images/amarula.svg" class="logo-topright"/>
       <slot />
     </div>
     <div class="my-14 mr-14" :style="style" />
