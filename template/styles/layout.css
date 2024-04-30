@@ -19,6 +19,13 @@
   border-style: solid;
 }
 
+.logo-topright {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 100px;
+}
+
 .center {
   margin: 0;
   position: absolute;

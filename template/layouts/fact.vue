@@ -1,5 +1,6 @@
 <template>
   <div class="slidev-layout fact">
+    <img src="../images/amarula.svg" class="logo-topright"/>
     <div class="my-auto">
       <slot />
     </div>
