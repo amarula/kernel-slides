@@ -125,7 +125,6 @@ In this list it is possible to:
 - Search for an entry (devres_find)
 - Perform operations on all entries (devres_for_each_res)
 
-All functions take a struct device as a parameter
 
 ---
 layout: default
@@ -153,9 +152,40 @@ It contains data about:
 layout: default
 ---
 
+# struct device
+
+## Wait... was it a tree all along?
+
+- Parent needed
+  - if last leaf detached...
+  - ...automatically remove everything possible!
+
+After all, devices are still under a tree
+
+
+---
+layout: default
+---
+
+# Groups
+
+Grouping devices is useful
+- for middle layers
+- for managing group policies
+- for releasing everything!
+
+Usage:
+- devres_open_group() for creating a group
+- devres_release_group() for releasing everything
+- devres_remove_group() used when we don't need grouping anymore
+
+---
+layout: default
+---
+
 # Example usage
 
-Simple example (thanks for your help ChatGPT)
+Simple driver example (thanks for your help ChatGPT)
 
 ```
 
@@ -181,7 +211,7 @@ hideInToc: true
 
 # Example usage
 
-Simple example (thanks for your help ChatGPT)
+Simple driver example (thanks for your help ChatGPT)
 
 ```
 
@@ -196,6 +226,37 @@ static void __exit mio_device_exit(void)
 
 devm_kfree uses kfree internally and releases the resource.
 
+
+---
+layout: default
+hideInToc: true
+---
+
+# Example usage
+
+Grouping example (thanks for your help ChatGPT)
+
+```
+
+static int __init sample_device_init(void)
+{
+    ...
+    if (!devres_open_group(dev, NULL, GFP_KERNEL))
+        return -ENOMEM;
+    int fail = init_device_0();
+    if (fail)
+        goto err;
+    fail = init_device_1();
+    if (fail)
+        goto err;
+    ...
+    devres_remove_group(dev, NULL);
+    return 0;
+err:
+    devres_release_group(dev, NULL);
+    return err_code;
+}
+```
 
 ---
 layout: last-slide
