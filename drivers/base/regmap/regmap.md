@@ -309,10 +309,11 @@ to be a spinlock, for example with fast_io flag in regmap_config
 ---
 level: 2
 title: The internal *_regmap_read*
-transition: fade
 ---
 
 # The internal `_regmap_read`
+
+````md magic-move
 
 ```c {all|6,7,8,9,10|12,13|15,16}
 static int _regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
@@ -335,16 +336,6 @@ static int _regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
 }
 ```
 
-If supported, tries to read from cache.
-If not, or if cache miss, attempts to read register. If successful, then
-also writes result in cache.
-
----
-title: ' '
----
-
-# The internal `_regmap_read`
-
 ```c {all|4|5,11,12,13|all}
 static int _regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
 {
@@ -363,6 +354,7 @@ static int _regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
 }
 ```
 
+````
 
 If supported, tries to read from cache.
 If not, or if cache miss, attempts to read register. If successful, then
