@@ -19,6 +19,27 @@
   border-style: solid;
 }
 
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.content-image-right {
+  vertical-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 50%;
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 50%;
+
+  padding: 32px;
+}
+
 SlideCurrentNo {
   position: absolute;
   bottom: 32px;
@@ -30,17 +51,9 @@ h2 {
 
 .slidev-layout.cover {
   text-align: end;
-  background-color: whitesmoke;
 
 }
 
-.slidev-layout.intro {
-  background-color: whitesmoke;
-}
-
-.slidev-layout.default {
-  background-color: whitesmoke;
-}
 
 .logo {
   width: 300px;
@@ -53,7 +66,6 @@ h2 {
     top: 50%;
     right: 0%;
     padding: 32px;
-    color: whitesmoke;
     font-weight: bolder;
     text-align: center;
     width:100%;
@@ -90,7 +102,6 @@ h2 {
     bottom: 50%;
     right: 0%;
     padding: 32px;
-    color: whitesmoke;
     font-weight: bolder;
     text-align: end;
     color: #fdcb0b;
