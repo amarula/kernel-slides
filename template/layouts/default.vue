@@ -4,7 +4,14 @@
       <slot />
     </div>
   </div>
-  <div class="bottompanel">
-    <SlideCurrentNo />
-  </div>
+  <table class="bottompanel">
+      <tr>
+        <th style="text-align:left; padding-left:8px;">
+          <a href="https://www.amarulasolutions.com">www.amarulasolutions.com</a>
+        </th>
+        <th>
+          <SlideCurrentNo />
+        </th>
+      </tr>
+  </table>
 </template>

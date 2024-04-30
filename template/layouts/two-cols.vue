@@ -18,7 +18,14 @@ const props = defineProps({
     </div>
     <div class="my-14 mr-14" :style="style" />
   </div>
-  <div class="bottompanel">
-    <SlideCurrentNo />
-  </div>
+  <table class="bottompanel">
+      <tr>
+        <th style="text-align:left; padding-left:8px;">
+          <a href="https://www.amarulasolutions.com">www.amarulasolutions.com</a>
+        </th>
+        <th>
+          <SlideCurrentNo />
+        </th>
+      </tr>
+  </table>
 </template>
