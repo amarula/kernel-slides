@@ -102,7 +102,6 @@ depending on the connection type.
 
 ---
 title: The *regmap_config* structure
-transition: fade
 ---
 
 # The `regmap_config` structure
@@ -110,6 +109,8 @@ transition: fade
 - Defined in `include/linux/regmap.h`.
 - Provides configuration options for `struct regmap`.
 - Let's see some interesting elements (most are optional):
+
+````md magic-move
 
 ```c
 struct regmap_config {
@@ -122,17 +123,6 @@ struct regmap_config {
 }
 ```
 
----
-title: ' '
-transition: fade
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
-
 ```c
 struct regmap_config {
     [...]
@@ -143,17 +133,6 @@ struct regmap_config {
     [...]
 }
 ```
-
----
-title: ' '
-transition: fade
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
 
 ```c
 struct regmap_config {
@@ -167,17 +146,6 @@ struct regmap_config {
 }
 ```
 
----
-title: ' '
-transition: fade
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
-
 ```c
 struct regmap_config {
     [...]
@@ -186,17 +154,6 @@ struct regmap_config {
     [...]
 }
 ```
-
----
-title: ' '
-transition: fade
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
 
 ```c
 struct regmap_config {
@@ -211,17 +168,6 @@ struct regmap_config {
 }
 ```
 
----
-title: ' '
-transition: fade
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
-
 ```c
 struct regmap_config {
     [...]
@@ -232,16 +178,6 @@ struct regmap_config {
 }
 ```
 
----
-title: ' '
----
-
-# The `regmap_config` structure
-
-- Defined in `include/linux/regmap.h`.
-- Provides configuration options for `struct regmap`.
-- Let's see some interesting elements (most are optional):
-
 ```c
 struct regmap_config {
     [...]
@@ -251,6 +187,8 @@ struct regmap_config {
     [...]
 }
 ```
+
+````
 
 ---
 
