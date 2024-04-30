@@ -40,47 +40,6 @@
   padding: 32px;
 }
 
-SlideCurrentNo {
-  position: absolute;
-  top: 50%;
-  bottom: 50%;
-  left: 32px;
-  top: auto;
-  bottom: auto;
-  transform: translateY(50%);
-  border-image: linear-gradient(#fdcb0b, #fdcb0b) 30;
-  border-width: 4px;
-  border-style: solid;
-}
-
-.logo-topright {
-  position: absolute;
-  right: 32px;
-  top: 32px;
-  width: 100px;
-}
-
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-.content-image-right {
-  vertical-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 50%;
-  position: absolute;
-  top: 0%;
-  bottom: 0%;
-  left: 50%;
-
-  padding: 32px;
-}
-
 h2 {
   margin-top: 32px;
 }
@@ -121,13 +80,11 @@ h2 {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 16px;
+  padding-left: 16px;
   font-size: 16px;
   background-color: #fdcb0b;
   background-color: #fdcb0b;
   font-weight: bold;
-  align-content: center;
-  text-align: end;
-  align-items: end;
 }
 
 .slidev-layout.section {
