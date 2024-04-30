@@ -5,4 +5,7 @@
       <slot />
     </div>
   </div>
+  <div class="bottompanel">
+    <SlideCurrentNo />
+  </div>
 </template>
