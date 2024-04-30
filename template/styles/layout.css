@@ -32,17 +32,37 @@ h2 {
   float: left;
 }
 
+.last-slide {
+  h1 {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    padding: 32px;
+    color: whitesmoke;
+    font-weight: bolder;
+    text-align: center;
+    width:100%;
+    color: #fdcb0b;
+    font-size: 42px;
+    transform: translateY(-50%);
+  }
+}
+
 .bottompanel {
   position: absolute;
   right: 0px;
   bottom: 0px;
-  height: 24px;
+  height: 32px;
   width: 100%;
-  padding: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 16px;
   font-size: 16px;
+  background-color: #fdcb0b;
   font-weight: bold;
   align-content: center;
   text-align: end;
+  align-items: end;
 }
 
 .slidev-layout.section {
@@ -77,12 +97,6 @@ h2 {
     border-width: 4px;
     border-style: solid;
   }
-}
-
-.bottompanel {
-  background-color: #fdcb0b;
-  position: absolute;
-  align-items: end;
 }
 
 .slidev-layout.cover,
