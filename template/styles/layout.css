@@ -4,6 +4,21 @@
   --slidev-theme-primary: #5d8392;
 }
 
+.left-image {
+  vertical-align: middle;
+  width: 450px;
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 32px;
+  top: auto;
+  bottom: auto;
+  transform: translateY(50%);
+  border-image: linear-gradient(#fdcb0b, #fdcb0b) 30;
+  border-width: 4px;
+  border-style: solid;
+}
+
 SlideCurrentNo {
   position: absolute;
   bottom: 32px;
