@@ -390,10 +390,11 @@ Basically the same as `regmap_read`: checks alignment, locks, calls internal
 ---
 level: 2
 title: The internal *_regmap_write*
-transition: fade
 ---
 
 # The internal `_regmap_write`
+
+````md magic-move
 
 ```c {all|6,7|9,10,17|9,11,12,17|9,13,14,15,16,17}
 int _regmap_write(struct regmap *map, unsigned int reg, unsigned int val)
@@ -417,14 +418,6 @@ int _regmap_write(struct regmap *map, unsigned int reg, unsigned int val)
 }
 ```
 
-If caching is not bypassed or deferred, writes in cache.
-
----
-title: ' '
----
-
-# The internal `_regmap_write`
-
 ```c {all|4|all}
 int _regmap_write(struct regmap *map, unsigned int reg, unsigned int val)
 {
@@ -441,6 +434,9 @@ int _regmap_write(struct regmap *map, unsigned int reg, unsigned int val)
 }
 ```
 
+````
+
+If caching is not bypassed or deferred, writes in cache.  
 Then, writes in the actual hardware register.
 
 ---
