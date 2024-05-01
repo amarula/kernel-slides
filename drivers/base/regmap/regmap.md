@@ -1,40 +1,37 @@
 ---
-theme: apple-basic
+theme: ../../../template
 fonts:
   sans: Open Sans
   serif: IBM Plex Serif
   mono: IBM Plex Mono
   weights: '200,400,700'
-layout: intro-image
 image: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2069'
 transition: slide-left
 mdc: true
+layout: cover
 ---
 
-
-![](images/logo.png){width=150px}
-
-
-<div class="absolute bottom-10">
-    <h1>regmap:</h1>
-    <p>A generic hardware register access API</p>
-    Margherita Milani, Patrick Barsanti
-</div>
+# regmap
+## A generic hardware register access API
+### Margherita Milani, Patrick Barsanti
 
 ---
 layout: default
 title: ' '
+hideInToc: true
 ---
 
 # Table of contents
 
-<Toc minDepth="1" maxDepth="2"></Toc>
+<Toc minDepth="1" maxDepth="2"/>
 
 ---
-layout: center
+layout: default
 ---
 
 # What is regmap?
+
+<div class="center">
 
 - Initially an API for accessing registers on non-memory mapped buses, like
 I²C and SPI.
@@ -43,48 +40,47 @@ I²C and SPI.
 - Allows device drivers to interact with hardware registers in a unified manner.
 - Located at `drivers/base/regmap/*`.
 
+</div>
+
 ---
 layout: two-cols
-layoutClass: gap16
 transition: fade
 ---
 
 # Why regmap?
+
 - It applies what was already being used for ASoC (audio processing chip),
 abstracting it for general use.
 - Before, drivers had redundant and similar code when dealing with these buses.
 - Simplifies driver development.
 
-::right::
-
-<br><br>
-
-![](/images/drivers.svg)
+<img src="/images/drivers.svg" class="content-image-right"/>
 
 ---
 layout: two-cols
 layoutClass: gap16
 title: ' '
+hideInToc: true
+
 ---
 
 # Why regmap?
+
 - It applies what was already being used for ASoC (audio processing chip),
 abstracting it for general use.
 - Before, drivers had redundant and similar code when dealing with these buses.
 - Simplifies driver development.
 
-::right::
-
-<br><br>
-
-![](/images/regmap.svg)
+<img src="/images/regmap.svg" class="content-image-right"/>
 
 ---
-layout: center
+layout: default
 transition: slide-left
 ---
 
 # Practical steps to using regmap
+
+<div class="center">
 
 <v-clicks>
 
@@ -99,6 +95,8 @@ depending on the connection type.
 - Devres will free the structure for you when finished.
 
 </v-clicks>
+
+</div>
 
 ---
 title: The *regmap_config* structure
@@ -242,7 +240,7 @@ struct regmap *__devm_regmap_init_i2c(struct i2c_client *i2c, const struct regma
 EXPORT_SYMBOL_GPL(__devm_regmap_init_i2c);
 ```
 
-Gets i2c bus information, then passes it all to `__devm_regmap_init`.  
+Gets i2c bus information, then passes it all to `__devm_regmap_init`.
 `__devm_regmap_init` then calls `__regmap_init` (found in
 `drivers/base/regmap/regmap.c`),
 which uses the `struct regmap_config` and the bus information to
@@ -251,6 +249,7 @@ allocate space for and initialise a `struct regmap`.
 ---
 layout: fact
 title: ' '
+hideInToc: true
 ---
 
 ## Some functions are declared and exported as `__foo`,
@@ -261,7 +260,7 @@ title: ' '
 <div align=left>
 
 Inside the header file, there is a wrapper macro named `foo`, which calls
-`__foo` while also checking lock dependencies at runtime.  
+`__foo` while also checking lock dependencies at runtime.
 The following example is taken from `include/linux/regmap.h`:
 
 ```c
@@ -279,7 +278,7 @@ title: The *regmap_read* function
 ---
 # The `regmap_read` function
 
-Defined in `drivers/base/regmap/regmap.c`.  
+Defined in `drivers/base/regmap/regmap.c`.
 Accepts three arguments: the map to read from, the register to be read, and the
 pointer to where the read value should be stored.
 
@@ -436,25 +435,27 @@ int _regmap_write(struct regmap *map, unsigned int reg, unsigned int val)
 
 ````
 
-If caching is not bypassed or deferred, writes in cache.  
+If caching is not bypassed or deferred, writes in cache.
 Then, writes in the actual hardware register.
 
 ---
-layout: center
+layout: default
 ---
 
 # Freeing
 
+<div class="center">
+
 If you use `devm_` to initialise your regmap, devres will free the allocated
-space for you.  
+space for you.
+
 And to know more about how this works... you can take a look at our presentation
 about devres! :)
 
+</div>
 ---
-layout: center
+layout: last-slide
 title: ' '
+hideInToc: true
 ---
-
-# Thank you!
-
 
