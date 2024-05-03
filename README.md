@@ -19,5 +19,5 @@ devices and passing them around).
 To start the slide show:
 
 - `npm install`
-- `run dev drivers/base/regmap/regmap.md`
+- `npm run dev drivers/base/regmap/regmap.md`
 - visit http://localhost:3030
