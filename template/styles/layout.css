@@ -34,6 +34,14 @@
   transform: translateY(-50%);
 }
 
+.font-small {
+  font-size: 14px;
+}
+
+.font-large {
+  font-size: 18px;
+}
+
 .content-image-right {
   vertical-align: center;
   margin-top: auto;
