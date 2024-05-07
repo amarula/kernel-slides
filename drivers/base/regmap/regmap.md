@@ -305,6 +305,7 @@ to be a spinlock, for example with fast_io flag in regmap_config
 ---
 level: 2
 title: The internal *_regmap_read*
+hideInToc: true
 ---
 
 # The internal `_regmap_read`
@@ -386,6 +387,7 @@ Basically the same as `regmap_read`: checks alignment, locks, calls internal
 ---
 level: 2
 title: The internal *_regmap_write*
+hideInToc: true
 ---
 
 # The internal `_regmap_write`
