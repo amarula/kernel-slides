@@ -17,7 +17,6 @@ layout: cover
 
 ---
 layout: default
-title: ' '
 hideInToc: true
 ---
 
@@ -59,7 +58,6 @@ abstracting it for general use.
 ---
 layout: two-cols
 layoutClass: gap16
-title: ' '
 hideInToc: true
 
 ---
@@ -248,7 +246,6 @@ allocate space for and initialise a `struct regmap`.
 
 ---
 layout: fact
-title: ' '
 hideInToc: true
 ---
 
@@ -455,7 +452,6 @@ about devres! :)
 </div>
 ---
 layout: last-slide
-title: ' '
 hideInToc: true
 ---
 
