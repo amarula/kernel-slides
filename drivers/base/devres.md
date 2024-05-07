@@ -17,6 +17,7 @@ drawings:
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
 mdc: true
+hideInToc: true
 
 
 layout: cover
@@ -37,6 +38,8 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 ---
 layout: default
+hideInToc: true
+
 ---
 
 # Index
@@ -150,6 +153,7 @@ It contains data about:
 
 ---
 layout: default
+hideInToc: true
 ---
 
 # struct device
@@ -197,6 +201,7 @@ static int __init sample_device_init(void)
         printk(KERN_ERR "Out of memory!\n");
         return -ENOMEM;
     }
+    ...
     register_chrdev(0, DEVICE_NAME, &fops);
     return 0;
 }
@@ -219,7 +224,7 @@ static void __exit mio_device_exit(void)
 {
     // DEVRES: Deallocating device memory
     devm_kfree(&THIS_MODULE->dev, data_buffer);
-
+    ...
     unregister_chrdev(0, DEVICE_NAME);
 }
 ```
