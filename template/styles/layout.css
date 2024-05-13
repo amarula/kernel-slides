@@ -57,6 +57,12 @@
   padding: 32px;
 }
 
+
+ul,li {
+  list-style-type: disc;
+}
+
+
 h2 {
   margin-top: 32px;
 }
