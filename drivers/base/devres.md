@@ -38,7 +38,7 @@ layout: cover
 Authors: Flavia Caforio, Andrea Calabrese
 
 <!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
+welcome presentation di devres by me and Flavia ..
 -->
 
 ---
@@ -59,17 +59,11 @@ layout: section
 # Peripheral mapping
 <img src="images/commodore64.jpg"></img>
 
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
--->
-
 ---
 layout: default
 ---
 
-# devres.c - structures TODO 
+# Overview
 
 ## Handle resource management
 
@@ -86,6 +80,9 @@ layout: default
 - MEM
 - ...
 
+<!--
+Here start listing what devres does. Tell how important it is!
+-->
 
 ---
 layout: default
@@ -106,6 +103,10 @@ hideInToc: true
   - parameters and results through **void***
 - Foreach cycles
 - Everything is exported under GPL!
+
+<!--
+Self-explanatory, linked list with many benefits
+-->
 
 ### Low level drivers can be simplified a lot by using devres!
 ---
@@ -162,6 +163,11 @@ It contains many data included:
 - whether it is removable or not
 </div>
 
+<!--
+Focus on structure. it is a tree, kobject is managed, private data allows for
+general data passing, remember to point the spinlock for devres!
+-->
+
 ---
 hideInToc: true
 dragPos:
@@ -194,6 +200,10 @@ In this list it is possible to:
 - Perform operations on all entries (devres_for_each_res)
 </div>
 
+<!--
+Spinlock important: we are in the kernel drivers, no mutexes here
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -208,6 +218,12 @@ hideInToc: true
   - ...automatically remove everything possible!
 
 After all, devices are still under a tree
+
+<!--
+Devices are under a tree: when a device is unplugged, if no leaf is found also
+the parents get "unplugged"
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -236,6 +252,11 @@ struct devres_node {
 	size_t				size;
 };
 ```
+
+<!--
+It's a linked list. dr_release_t manages the release, is a function. Name used
+for searching
+-->
 
 ---
 layout: default
@@ -293,6 +314,10 @@ void *__devres_alloc_node(dr_release_t release, size_t size, gfp_t gfp, int nid,
 }
 ```
 
+<!--
+Allocation of the node for the list. alloc_dr: internal allocation
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -322,6 +347,11 @@ static __always_inline struct devres * alloc_dr(dr_release_t release,
 	return dr;
 }
 ```
+
+<!--
+allocates device resource, internally
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -355,6 +385,13 @@ struct spi_controller *__devm_spi_alloc_controller(struct device *dev,
 	return ctlr;
 }
 ```
+
+<!--
+In this example, the SPI controller first allocates the SPI controller, then
+adds it to the device. If the controller allocation failed, then it frees the
+allocated SPI release controller structure
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -382,6 +419,10 @@ static void add_dr(struct device *dev, struct devres_node *node)
 	list_add_tail(&node->entry, &dev->devres_head);
 }
 ```
+
+<!--
+... But what is devres_add? Well, a new node is added!
+-->
 
 ```c
 static inline void __list_add(struct list_head *new,
@@ -431,6 +472,10 @@ struct spi_controller *__devm_spi_alloc_controller(struct device *dev,
 	return ctlr;
 }
 ```
+<!--
+Again, now we will focus on free!
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -449,6 +494,13 @@ void devres_free(void *res)
 	}
 }
 ```
+
+<!--
+It frees the resource, also looking for the container. It also checks if
+the container has any node entry, as it should have none. Then it frees also
+the container. If there is no resource, then... why are we even calling it?
+-->
+
 ---
 layout: default
 ---
@@ -481,6 +533,10 @@ int devres_destroy(struct device *dev, dr_release_t release,
 }
 ```
 
+<!--
+Destroying a resource lets it delete all the contents and free memory.
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -508,6 +564,11 @@ void * devres_remove(struct device *dev, dr_release_t release,
 	return NULL;
 }
 ```
+
+<!--
+Spinlock to protect the finding of the resource and the deletion
+-->
+
 ---
 layout: default
 hideInToc: true
@@ -744,7 +805,6 @@ int devres_release_group(struct device *dev, void *id)
 	int cnt = 0;
 
 	spin_lock_irqsave(&dev->devres_lock, flags);
-
 	grp = find_group(dev, id);
 	if (grp) {
 		struct list_head *first = &grp->node[0].entry;
