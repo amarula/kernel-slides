@@ -1,11 +1,5 @@
 ---
 theme: ../../template
-fonts:
-  sans: Open Sans
-  serif: IBM Plex Serif
-  mono: IBM Plex Mono
-  weights: '200,400,700'
-image: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2069'
 transition: slide-left
 mdc: true
 layout: cover
@@ -21,7 +15,7 @@ layout: default
 hideInToc: true
 ---
 
-## Table of contents
+# Table of contents
 
 <Toc minDepth="1" maxDepth="2"/>
 
