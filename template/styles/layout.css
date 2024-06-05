@@ -77,18 +77,11 @@ h2 {
   float: left;
 }
 
-.last-slide {
+.cover {
   h1 {
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    padding: 32px;
     font-weight: bolder;
-    text-align: center;
-    width:100%;
     color: #fdcb0b;
     font-size: 42px;
-    transform: translateY(-50%);
   }
 }
 
@@ -145,7 +138,15 @@ h2 {
   @apply h-full grid;
 
   h1 {
-    @apply text-6xl leading-20;
+    @apply text-6xl;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-base font-light;
   }
 
   h1 + p {
