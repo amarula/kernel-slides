@@ -10,8 +10,6 @@
   vertical-align: middle;
   width: 450px;
   position: absolute;
-  top: 50%;
-  bottom: 50%;
   left: 32px;
   top: auto;
   bottom: auto;
@@ -53,23 +51,15 @@
   top: 0%;
   bottom: 0%;
   left: 50%;
-
   padding: 32px;
 }
-
 
 ul,li {
   list-style-type: disc;
 }
 
-
-h2 {
-  margin-top: 32px;
-}
-
 .slidev-layout.cover {
   text-align: end;
-
 }
 
 .logo {
@@ -104,6 +94,7 @@ h2 {
   background-color: black;
   text-align: end;
   align-items: center;
+
   h1 {
     position: absolute;
     top: 50%;
@@ -115,14 +106,12 @@ h2 {
     color: #fdcb0b;
     font-size: 42px;
     transform: translateY(-50%);
-
   }
+
   img {
     vertical-align: middle;
     width: 450px;
     position: absolute;
-    top: 50%;
-    bottom: 50%;
     left: 32px;
     top: auto;
     bottom: auto;
