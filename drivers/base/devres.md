@@ -506,7 +506,7 @@ layout: default
 ---
 # Example usage - devres destroy, remove
 
-```c{all|5}
+```c {all|5}
 void devm_usb_put_phy(struct device *dev, struct usb_phy *phy)
 {
 	int r;
@@ -518,7 +518,7 @@ void devm_usb_put_phy(struct device *dev, struct usb_phy *phy)
 
 # Devres destroy
 
-```c{all|6}
+```c {all|6}
 int devres_destroy(struct device *dev, dr_release_t release,
 		   dr_match_t match, void *match_data)
 {
@@ -544,7 +544,7 @@ hideInToc: true
 
 # Devres remove
 
-```c{all|7|13|8|10}
+```c {all|7|13|8|10}
 void * devres_remove(struct device *dev, dr_release_t release,
 		     dr_match_t match, void *match_data)
 {
@@ -636,7 +636,7 @@ layout: default
 
 Grouping example from devres.rst:
 
-```c{all|1}
+```c {all|1}
   if (!devres_open_group(dev, NULL, GFP_KERNEL))
 	return -ENOMEM;
 
@@ -709,7 +709,7 @@ hideInToc: true
 
 Grouping example from devres.rst:
 
-```c{all|13}
+```c {all|13}
   if (!devres_open_group(dev, NULL, GFP_KERNEL))
 	return -ENOMEM;
 
@@ -768,7 +768,7 @@ hideInToc: true
 
 Grouping example from devres.rst:
 
-```c{all|17}
+```c {all|17}
   if (!devres_open_group(dev, NULL, GFP_KERNEL))
 	return -ENOMEM;
 
