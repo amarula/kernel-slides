@@ -1,14 +1,5 @@
 ---
-# try also 'default' to start simple
 theme: ../../template
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background:
-fonts:
-  sans: Open Sans
-  serif: IBM Plex Serif
-  mono: IBM Plex Mono
-  weights: '200,400,700'
 # some information about your slides, markdown enabled
 title: Devres
 # apply any unocss classes to the current slide
@@ -24,18 +15,12 @@ transition: slide-left
 # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
 mdc: true
 hideInToc: true
-
 layout: cover
 ---
 
 # DEVRES
-
 ## Device Resource Manager
-
-### By Amarula Solutions
-
-
-Authors: Flavia Caforio, Andrea Calabrese
+### Flavia Caforio, Andrea Calabrese
 
 <!--
 welcome presentation di devres by me and Flavia ..
