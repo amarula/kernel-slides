@@ -1,11 +1,5 @@
 ---
 theme: ../../../template
-fonts:
-  sans: Open Sans
-  serif: IBM Plex Serif
-  mono: IBM Plex Mono
-  weights: '200,400,700'
-image: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2069'
 transition: slide-left
 mdc: true
 layout: cover
@@ -249,12 +243,14 @@ layout: fact
 hideInToc: true
 ---
 
-## Some functions are declared and exported as `__foo`,
-## while in drivers they are called as `foo`. How?
+# Something curious:
+
+Some functions are declared and exported as `__foo`,
+while in drivers they are called as `foo`. How?
+
+<br>
 
 <v-click>
-
-<div align=left>
 
 Inside the header file, there is a wrapper macro named `foo`, which calls
 `__foo` while also checking lock dependencies at runtime.
@@ -265,8 +261,6 @@ The following example is taken from `include/linux/regmap.h`:
 	__regmap_lockdep_wrapper(__regmap_init_i2c, #config,		\
 				i2c, config)
 ```
-
-</div>
 
 </v-click>
 
