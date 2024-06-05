@@ -23,8 +23,8 @@
 
 .logo-topright {
   position: absolute;
-  right: 32px;
-  top: 32px;
+  right: 16px;
+  top: 16px;
   width: 100px;
 }
 
@@ -73,7 +73,7 @@ h2 {
 }
 
 .logo {
-  width: 300px;
+  width: 350px;
   float: left;
 }
 
