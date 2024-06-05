@@ -97,17 +97,14 @@ h2 {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  height: 32px;
-  height: 32px;
+  height: 24px;
   width: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 16px;
   padding-left: 16px;
-  font-size: 16px;
+  font-size: 12px;
   background-color: #fdcb0b;
-  background-color: #fdcb0b;
-  font-weight: bold;
 }
 
 .slidev-layout.section {
