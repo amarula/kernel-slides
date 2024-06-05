@@ -30,8 +30,8 @@
     "highlighter": "all",
     "defaults": {
       "fonts": {
-        "sans": "Nunito Sans",
-        "mono": "Fira Code"
+        "sans": "Open Sans",
+        "mono": "JetBrains Mono"
       }
     }
   }
