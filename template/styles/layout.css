@@ -88,6 +88,9 @@ ul,li {
   padding-left: 16px;
   font-size: 12px;
   background-color: #fdcb0b;
+  th {
+    font-weight: 400;
+  }
 }
 
 .slidev-layout.section {
