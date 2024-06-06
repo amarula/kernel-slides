@@ -6,6 +6,13 @@
   --slidev-code-line-height: 14px;
 }
 
+html.dark {
+  .slidev-layout {
+    color: #cdcdcd;
+    background: #1e1e1e;
+  }
+}
+
 .left-image {
   vertical-align: middle;
   width: 450px;
@@ -87,6 +94,7 @@ ul,li {
   padding-right: 16px;
   padding-left: 16px;
   font-size: 12px;
+  color: black;
   background-color: #fdcb0b;
   th {
     font-weight: 400;
@@ -94,7 +102,7 @@ ul,li {
 }
 
 .slidev-layout.section {
-  background-color: black;
+  background-color: #1e1e1e;
   text-align: end;
   align-items: center;
 
