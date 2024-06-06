@@ -12,13 +12,15 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="grid grid-cols-2 w-full h-full">
-    <div class="slidev-layout default image-right" :class="props.class">
+  <div class="slidev-layout two-columns grid grid-cols-2 w-full h-full">
     <img src="../images/amarula-white.png" class="logo-topright" v-if="isDark" />
     <img src="../images/amarula.png" class="logo-topright" v-else />
+    <div class="col-left" :class="props.class">
       <slot />
     </div>
-    <div class="my-14 mr-14" :style="style" />
+    <div class="col-right" :style="props.class">
+      <slot name="right" />
+    </div>
   </div>
   <table class="bottompanel">
       <tr>
