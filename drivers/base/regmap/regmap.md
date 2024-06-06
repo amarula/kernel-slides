@@ -47,11 +47,14 @@ abstracting it for general use.
 - Before, drivers had redundant and similar code when dealing with these buses.
 - Simplifies driver development.
 
-<img src="/images/drivers.svg" class="content-image-right"/>
+::right::
+
+<img src="/images/drivers.svg"
+     class="content-image-right"
+     style="background-color:white; border-radius:20px; width:400px; margin-left:30px"/>
 
 ---
 layout: two-cols
-layoutClass: gap16
 hideInToc: true
 
 ---
@@ -63,7 +66,11 @@ abstracting it for general use.
 - Before, drivers had redundant and similar code when dealing with these buses.
 - Simplifies driver development.
 
-<img src="/images/regmap.svg" class="content-image-right"/>
+::right::
+
+<img src="/images/regmap.svg"
+     class="content-image-right"
+     style="background-color:white; border-radius:20px; width:400px; margin-left:30px"/>
 
 ---
 layout: default
