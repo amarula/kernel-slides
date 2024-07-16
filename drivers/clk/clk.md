@@ -85,3 +85,33 @@ Image source:
 [Silicon Labs](https://silabs.com/)
 
 </div>
+
+---
+layout: default
+title: Clock manipulation
+---
+
+# Clock gating
+
+- The most simple way to manipulate a clock signal.
+- Its purpose is to prevent a clock from reaching components which
+  do not require one in that moment (e.g. the component is turned off).
+- This is useful because it removes the power consumption given by
+  flip-flops switching states.
+
+<img src="/images/clk-gate.png"
+     style="border-radius:20px; width:400px;
+            margin-left:250px" />
+
+<!--
+
+Whenever some part of the system can be shut off, we can "gate" it,
+so it no longer effectively receives the clock signal.
+In this way, the only power dissipation is given from current leakages,
+but not anymore from switching the state of the flip-flops.
+
+So, at the cost of having more complex electronics and some extra control
+lines, we are able to consume less power, which is pretty important for
+embedded.
+
+-->
