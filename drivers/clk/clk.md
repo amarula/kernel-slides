@@ -18,3 +18,14 @@ hideInToc: true
 # Table of contents
 
 <Toc minDepth="1" maxDepth="2"/>
+
+---
+layout: default
+---
+
+# What is a clock?
+
+- A signal which oscillates between 0 and 1 with a certain frequency, supposed constant.
+- Acts as the "heartbeat" of the hardware components connected to it, allowing them to operate correctly and, if needed, synchronously with each other.
+- It is never perfect, there are many factors and imperfections at play, like jitter, non-instantaneous switching, etc.
+- Usually originates from a quartz crystal, as it is very precise in frequency response.
