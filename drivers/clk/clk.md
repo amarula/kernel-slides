@@ -178,3 +178,21 @@ hideInToc: true
 - Note also that if the input clock has a certain absolute error
   (e.g. 24MHz ± 120KHz), this will be multiplied along with the
   frequency (e.g. 50x multiplier -> 1.2GHz ± 6MHz).
+
+---
+layout: default
+hideInToc: true
+---
+
+# Clock multiplexing
+
+- A component can need different clock frequencies at different times.
+  This is achieved by having clock signals routed towards it through a
+  multiplexer.
+- A clock multiplexer usually has $2^n$ input lines,
+  $n$ control lines, and one output line:
+
+<img title="Multiplexer"
+     src="/images/mux.png"
+     style="border-radius:20px; height:120px;
+            background:white; margin-left:320px" />
