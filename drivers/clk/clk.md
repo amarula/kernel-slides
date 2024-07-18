@@ -115,3 +115,43 @@ lines, we are able to consume less power, which is pretty important for
 embedded.
 
 -->
+
+---
+layout: default
+hideInToc: true
+---
+
+# Clock dividing
+
+- Dividing the input clock frequency by a given amount.
+- A clock divider can be an analog or digital.
+  The latter is the most common, handles up to a few GHz.
+- In case of divisions by a power of 2, a simple
+  [binary counter](https://en.wikipedia.org/wiki/Frequency_divider#Digital)
+  can be used.
+- For any even integer, a
+  [Johnson counter](https://en.wikipedia.org/wiki/Ring_counter#Johnson_counter)
+  can be used:
+
+<img src="/images/johnson-table.png"
+     style="height:250px; border-radius:10px; margin-left:750px" />
+
+<img src="/images/johnson-counter.png"
+     style="height:250px; border-radius:10px; margin-top:-265px" />
+
+<!--
+
+Original frequency -> f
+
+For the binary counter, basically just connecting the n-th bit line
+will mean connecting to a clock which is f/(2^n).
+The second-least significant bit will be f/2, the third-most f/4,
+and so on.
+
+A Johnson counter is basically a series of flip-flops connected
+as a shift register, where the negated output of the last one is
+connected back as input to the first one. The even integer number for which
+you want to divide will be double the number of flip-flops, so the number
+of bits in the shift register, because going back to zero takes 2n steps.
+
+-->
