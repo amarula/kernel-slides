@@ -155,3 +155,26 @@ you want to divide will be double the number of flip-flops, so the number
 of bits in the shift register, because going back to zero takes 2n steps.
 
 -->
+
+---
+layout: default
+hideInToc: true
+---
+
+# Clock multiplying
+
+- Multiplying the input clock frequency by a given amount.
+- Useful to generate a high frequency clock starting from a lower
+  oscillator (e.g. a few GHz from 24MHz oscillator).
+- This is very complex, done with a
+  [Phase-Locked Loop](https://en.wikipedia.org/wiki/Phase-locked_loop)
+  (PLL) together with clock dividers.
+  Interesting, but not in the scope of this presentation.
+
+<img title="PLL Multiplier"
+     src="/images/pll-multiplier.png"
+     style="border-radius:10px; height:150px; margin-left:150px" />
+
+- Note also that if the input clock has a certain absolute error
+  (e.g. 24MHz ± 120KHz), this will be multiplied along with the
+  frequency (e.g. 50x multiplier -> 1.2GHz ± 6MHz).
