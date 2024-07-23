@@ -60,3 +60,28 @@ Also, from the oscillator's readings, we can note the imperfections
 in the signal, which is never a proper square wave.
 
 -->
+
+---
+layout: two-cols-header
+---
+
+# The clock tree
+
+::left::
+
+- The system takes a reference clock (e.g. from a crystal) as a
+  source and generates a clock tree to give all the components the correct
+  frequency clock.
+- This is done by gating, multiplying, dividing and muxing the original source.
+
+::right::
+
+<img src="/images/clk-tree.jpg"
+     style="border-radius:20px; height:370px; margin-left:50px" />
+
+<div style="font-size:10px; text-align:right">
+
+Image source:
+[Silicon Labs](https://silabs.com/)
+
+</div>
