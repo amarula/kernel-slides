@@ -210,3 +210,206 @@ layout: default
 - Because of this, the Common Clock Framework (CCF) was born.
 - Drivers are now only responsible for populating the framework,
   and the goal is to be able to link clocks across different drivers.
+
+---
+layout: two-cols-header
+---
+
+# The Common Clock Framework
+
+::left::
+
+<div style="margin-right:50px">
+
+It introduces a common structure (in `drivers/clk/clk.c`):
+```c
+struct clk_core {
+        const char              *name;
+        const struct clk_ops    *ops;
+        struct clk_hw           *hw;
+        struct module           *owner;
+        struct clk_core         *parent;
+        const char              **parent_names;
+        struct clk_core         **parents;
+        u8                      num_parents;
+        u8                      new_parent_index;
+        [...]
+};
+```
+
+</div>
+
+::right::
+
+And introduces a set of common APIs to operate on a clock node,
+in `include/linux/clk-provider.h`:
+```c
+struct clk_ops {
+        int       (*prepare)(struct clk_hw *hw);
+        void      (*unprepare)(struct clk_hw *hw);
+        int       (*is_prepared)(struct clk_hw *hw);
+        [...]
+        int       (*enable)(struct clk_hw *hw);
+        void      (*disable)(struct clk_hw *hw);
+        int       (*is_enabled)(struct clk_hw *hw);
+        [...]
+        int       (*determine_rate)(struct clk_hw *hw,
+                                    struct clk_rate_request *req);
+        int       (*set_parent)(struct clk_hw *hw, u8 index);
+        u8        (*get_parent)(struct clk_hw *hw);
+        int       (*set_rate)(struct clk_hw *hw,
+                              unsigned long rate,
+                              unsigned long parent_rate);
+        [...]
+        void      (*init)(struct clk_hw *hw);
+        [...]
+};
+```
+
+<!--
+
+Note that clocks in the linux kernel have so-called parents,
+which can be more than one, because of the clock muxing we spoke
+about earlier.
+
+Re-parenting a clock means changing the muxes in order to be attached
+to a different clock node.
+
+clk_ops in the linux kernel are more than 20.
+In u-boot, on the other hand, this is simplified. There are only 9,
+and some that are shown are not even present.
+
+-->
+
+---
+hideInToc: true
+---
+
+# The Common Clock Framework
+
+- For each clock, some (not all) of the callback functions must be provided.
+  - For example `prepare`/`unprepare` and `init` are mandatory,
+    however only clock gates can `enable`/`disable`, a clock divider
+    supports `set_rate`, etc.
+- Drivers will populate the framework with clock nodes, and by specifying
+  the parents list for each node, the clock tree will be generated.
+- When one of the callbacks for a clock node is called, the correct
+  behaviour will be propagated through the clock tree and will affect all
+  other clocks that are supposed to be affected.
+  - For example by calling `set_rate` on a clock which does not directly
+    support it, the tree will be parsed towards the root to perform that
+    operation, for example by re-parenting or setting rates of other
+    clock nodes.
+
+---
+hideInToc: true
+transition: fade
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-1.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+hideInToc: true
+transition: fade
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-2.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+hideInToc: true
+transition: fade
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-3.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+hideInToc: true
+transition: fade
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-4.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+hideInToc: true
+transition: fade
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-5.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+hideInToc: true
+---
+
+# The Common Clock Framework
+
+- Another example: by calling `enable`/`disable` on a clock node which
+  does not directly support it, the tree will be parsed until a clock
+  gate is found.  
+  There is an enable counter for gates which makes sure that
+  a whole section is not cut off from receiving a clock by mistake.
+  So, `enable`/`disable` basically increment/decrement a counter;
+  before that gate cuts off the clock signal to all the clock nodes
+  connected to it, its counter must reach 0.
+
+<img src="/images/disable-animation-6.png"
+     style="border-radius:10px; width:350px; margin-left:200px" />
