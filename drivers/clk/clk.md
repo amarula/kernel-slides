@@ -413,3 +413,16 @@ hideInToc: true
 
 <img src="/images/disable-animation-6.png"
      style="border-radius:10px; width:350px; margin-left:200px" />
+
+---
+layout: default
+---
+
+# Devicetree support
+
+- By declaring every single node properly, with its type, its properties
+  and all of its parents, the clock tree will be correctly generated and
+  supported by the CCF without the need of having any of the logic
+  inside the clock controller driver itself, because of how the
+  clock tree works.
+- This allows for clean and modern programming.
