@@ -196,3 +196,17 @@ hideInToc: true
      src="/images/mux.png"
      style="border-radius:20px; height:120px;
             background:white; margin-left:320px" />
+
+---
+layout: default
+---
+
+# The kernel's clock subsystem: a brief history
+
+- Each driver in the linux kernel which had to deal with clocks
+  and related objects had to do it by itself.  
+  This brought a lot of duplicated, platform-specific and
+  incompatible code.
+- Because of this, the Common Clock Framework (CCF) was born.
+- Drivers are now only responsible for populating the framework,
+  and the goal is to be able to link clocks across different drivers.
