@@ -426,3 +426,19 @@ layout: default
   inside the clock controller driver itself, because of how the
   clock tree works.
 - This allows for clean and modern programming.
+
+---
+hideInToc: true
+---
+
+# Suggestion
+
+<Youtube id="Io2r3STrMSo" />
+
+This talk by Neil Armstrong is very well made and somehow
+inspired this presentation, so if you are interested I suggest you
+check it out!
+
+---
+layout: last-slide
+---
