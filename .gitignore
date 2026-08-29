@@ -1,1 +1,5 @@
 node_modules
+
+# Reference/training PDFs (not committed)
+Introduction to Linux Kernel.pdf
+contribuition/bootlin/*.pdf
