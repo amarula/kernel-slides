@@ -53,8 +53,3 @@ This deck is a derivative of:
 
 All diagrams were recreated as editable draw.io sources under `kernel/linux-kernel/diagrams/`
 and rendered to `kernel/linux-kernel/public/images/`.
-
----
-layout: last-slide
-hideInToc: true
----

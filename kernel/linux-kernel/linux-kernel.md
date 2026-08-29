@@ -32,7 +32,6 @@ hideInToc: true
 - [**Pin muxing (pinctrl)**](#/92)
 - [**Device & driver model**](#/98)
 - [**I2C subsystem**](#/112)
-
 ---
 layout: default
 hideInToc: true
@@ -51,7 +50,7 @@ hideInToc: true
 - [**Kernel debugging**](#/255)
 - [**Appendix: mmap()**](#/260)
 - [**Resources**](#/264)
-
+- [**Open source contributions**](#/268)
 ---
 src: ./slides/01-introduction.md
 ---
@@ -138,4 +137,8 @@ src: ./slides/21-mmap.md
 
 ---
 src: ./slides/22-resources.md
+---
+
+---
+src: ./slides/23-contributions.md
 ---
