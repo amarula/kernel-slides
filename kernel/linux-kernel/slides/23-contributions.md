@@ -2,7 +2,6 @@
 layout: section
 hideInToc: true
 ---
-
 # Open source contributions
 
 ---
