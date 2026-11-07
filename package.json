@@ -8,7 +8,7 @@
     "export": "slidev export kernel/linux-kernel/linux-kernel.md"
   },
   "dependencies": {
-    "@slidev/cli": "^52.8.0",
+    "@slidev/cli": "^52.20.1",
     "@slidev/theme-apple-basic": "^0.25.1",
     "@slidev/theme-default": "^0.25.0",
     "playwright-chromium": "^1.43.1",
