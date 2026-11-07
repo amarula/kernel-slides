@@ -53,6 +53,51 @@ hideInToc: true
 ---
 layout: default
 ---
+# Registering a character device
+
+- A device number is a `dev_t`; use `MAJOR()`, `MINOR()` and `MKDEV()` to split/build it.
+- Reserve a range of device numbers:
+  - `alloc_chrdev_region(&dev, 0, 1, "foo")` — dynamic major;
+  - `register_chrdev_region(dev, 1, "foo")` — fixed major;
+  - `unregister_chrdev_region(dev, 1)` — release.
+- Embed a `struct cdev` in the driver data, then publish the `file_operations`:
+
+```c
+ret = alloc_chrdev_region(&foo_dev, 0, 1, "foo");
+if (ret)
+    return ret;
+
+cdev_init(&foo_cdev, &foo_fops);
+ret = cdev_add(&foo_cdev, foo_dev, 1);
+if (ret)
+    unregister_chrdev_region(foo_dev, 1);
+```
+
+- `cdev_del()` removes the device from the kernel on driver exit.
+
+---
+layout: default
+---
+# Creating device nodes
+
+- The kernel does not create `/dev/foo` by itself; it exports the device number and a **uevent**.
+- Register a class and create the device:
+
+```c
+foo_class = class_create("foo");
+if (IS_ERR(foo_class))
+    return PTR_ERR(foo_class);
+
+device_create(foo_class, NULL, foo_dev, NULL, "foo");
+```
+
+- udev/mdev listens to the uevent and creates `/dev/foo` with the right major/minor.
+- devtmpfs may create the node automatically; udev adds permissions, symlinks and rules.
+- On remove: `device_destroy(foo_class, foo_dev);` then `class_destroy(foo_class);`.
+
+---
+layout: default
+---
 # File operations
 
 ```c
@@ -109,6 +154,80 @@ default:
     return -ENOTTY;
 }
 ```
+
+---
+layout: default
+---
+# ioctl command encoding
+
+- `cmd` is a 32-bit value encoding **direction**, **type** (8 bits), **number** (8 bits) and
+  **size** (14 bits).
+- Build commands with the `_IOC` macros:
+  - `_IO(type, nr)` — no argument;
+  - `_IOR(type, nr, datatype)` — userland reads (driver writes to user);
+  - `_IOW(type, nr, datatype)` — userland writes (driver reads from user);
+  - `_IOWR(type, nr, datatype)` — both directions.
+- Pick a unique `type` character and keep the numbers stable: they are part of the userspace ABI.
+
+```c
+#define FOO_GET_REG  _IOR('F', 0x01, struct foo_reg)
+#define FOO_SET_REG  _IOW('F', 0x02, struct foo_reg)
+```
+
+- Copy data with `copy_from_user()` / `copy_to_user()`; return `-ENOTTY` for unknown commands.
+- `_IOC_DIR()`, `_IOC_TYPE()`, `_IOC_NR()` and `_IOC_SIZE()` decode a command.
+
+---
+layout: default
+---
+# Minimal char driver: init
+
+- Order matters: device numbers → cdev → class → device.
+
+```c
+static int __init foo_init(void)
+{
+    int ret;
+    ret = alloc_chrdev_region(&foo_dev, 0, 1, "foo");
+    if (ret)
+        return ret;
+    cdev_init(&foo_cdev, &foo_fops);
+    ret = cdev_add(&foo_cdev, foo_dev, 1);
+    if (ret)
+        goto err_unregister;
+    foo_class = class_create("foo");
+    if (IS_ERR(foo_class)) {
+        ret = PTR_ERR(foo_class);
+        goto err_cdev;
+    }
+    device_create(foo_class, NULL, foo_dev, NULL, "foo");
+    return 0;
+err_cdev:
+    cdev_del(&foo_cdev);
+err_unregister:
+    unregister_chrdev_region(foo_dev, 1);
+    return ret;
+}
+```
+
+---
+layout: default
+---
+# Minimal char driver: exit
+
+```c
+static void __exit foo_exit(void)
+{
+    device_destroy(foo_class, foo_dev);
+    class_destroy(foo_class);
+    cdev_del(&foo_cdev);
+    unregister_chrdev_region(foo_dev, 1);
+}
+```
+
+- Unwind in reverse order: device → class → cdev → device numbers.
+- `device_destroy()` removes the `/dev` node and emits a uevent; `class_destroy()` removes the
+  class.
 
 ---
 layout: default

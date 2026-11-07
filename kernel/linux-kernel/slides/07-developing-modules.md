@@ -150,3 +150,61 @@ MODULE_PARM_DESC(howmany, "Number of greetings");
 - `module_param(name, type, perm)` — `type` in `byte, short, ushort, int, uint, long, ulong,
   charp, bool, invbool`; `perm` controls `/sys/module/<module>/parameters/<param>`.
 - Arrays via `module_param_array()`.
+
+---
+layout: default
+---
+# Kernel coding style
+
+- Kernel code is read far more often than it is written; style keeps the tree coherent.
+- The reference is `Documentation/process/coding-style.rst`.
+- The rules are not aesthetic preferences: they reduce review friction and prevent real bugs
+  (misleading indentation, overly complex functions).
+- `scripts/checkpatch.pl` checks patches for the mechanical rules.
+- Run it before sending **every** patch.
+
+---
+layout: default
+---
+# Indentation, line length and braces
+
+- Use **tabs**, 8 characters wide; do not mix spaces and tabs for indentation.
+- Keep lines at **80 columns**; break long strings and expressions.
+- Do not put multiple statements on one line; no trailing whitespace; no empty line at EOF.
+- Braces:
+  - function opening brace on the **next line**;
+  - `if`, `for`, `while` and `switch` opening brace on the **same line**;
+  - `switch` and `case` at the same indentation level;
+  - one blank line between functions.
+- If a function needs more than ~3 levels of indentation, refactor it.
+
+---
+layout: default
+---
+# Naming, functions and comments
+
+- Names: descriptive and concise, lowercase with underscores; **no CamelCase**.
+- Functions: one thing well, short (one or two screens); avoid more than ~10 local variables.
+- Comments:
+  - explain **what** and **why**, not **how**; the code should explain itself;
+  - do not put the author, date or irrelevant history in the code;
+  - use `/* ... */` for multi-line comments; `//` is accepted for SPDX and short notes.
+- Every file starts with `// SPDX-License-Identifier: GPL-2.0` (or the project's license).
+- Public functions should have kernel-doc comments (`/** ... */`) when they are part of an API.
+
+---
+layout: default
+---
+# checkpatch.pl
+
+```console
+$ ./scripts/checkpatch.pl --strict --no-tree my.patch
+$ ./scripts/checkpatch.pl --strict --fix-inplace my.patch
+```
+
+- `--strict` enables additional checks; `--no-tree` allows running outside a kernel tree.
+- Common findings: trailing whitespace, long lines, missing `Signed-off-by`, incorrect
+  indentation, `printk()` without a log level, spaces around operators.
+- `--fix-inplace` fixes the mechanical issues; review the result before sending.
+- Check the patch **before** `git send-email`, and again after rebasing.
+- `checkpatch.pl` is a tool, not a substitute for understanding the coding style.

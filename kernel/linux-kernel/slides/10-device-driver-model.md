@@ -109,6 +109,43 @@ layout: default
 ---
 layout: default
 ---
+# Probe: success, failure, defer
+
+- A probe callback returns:
+  - **0** — the device is bound successfully;
+  - a **negative errno** — the probe failed and the device is not bound;
+  - **`-EPROBE_DEFER`** — the device may become bindable later; the probe is retried.
+- `-EPROBE_DEFER` is **not an error**: a resource provider (clock, regulator, GPIO, pinctrl,
+  PHY, DMA…) is not registered yet.
+- The device is put on the **deferred probe list** and retried when a driver registers or a
+  device is added.
+- Debug: `/sys/kernel/debug/devices_deferred`, `dmesg | grep 517`, and the
+  `driver_deferred_probe_timeout` parameter.
+
+---
+layout: default
+---
+# Deferred probing in practice
+
+- Return `-EPROBE_DEFER` when a dependency is not available yet:
+  - `devm_clk_get()`, `devm_regulator_get()`, `devm_gpiod_get()`, `devm_pinctrl_get()`;
+  - a PHY, DMA channel, reset controller or another provider.
+- `dev_err_probe()` is the recommended helper: it logs the error (or the defer reason at debug
+  level) and returns the original error code.
+
+```c
+clk = devm_clk_get(dev, "fck");
+if (IS_ERR(clk))
+    return dev_err_probe(dev, PTR_ERR(clk), "failed to get fck\n");
+```
+
+- Do not return `-EPROBE_DEFER` forever: if the provider never appears, the device stays on the
+  deferred list.
+- `fw_devlink` can add device-link dependencies from firmware to improve probe ordering.
+
+---
+layout: default
+---
 # The model is recursive
 
 Drivers combine a **bus infrastructure** (device model) and a **framework**; buses can be stacked

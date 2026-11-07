@@ -22,6 +22,35 @@ layout: default
 ---
 layout: default
 ---
+# Inside /proc/modules and /sys/module
+
+- `/proc/modules` lists loaded modules; each line has:
+  - **name**, **size** in bytes, **refcount**, **dependencies**, **state** (`Live`, `Loading`,
+    `Unloading`), and the **kernel address** of the module.
+- `/sys/module/<name>/` exposes module attributes:
+  - `parameters/` — one file per module parameter (writable if permitted);
+  - `version/` — `MODULE_VERSION()` string;
+  - `refcnt/` — current reference count;
+  - `sections/` — section addresses (debugging).
+- Built-in modules only appear in `/sys/module/` if they have a version or at least one parameter.
+
+---
+layout: default
+---
+# Module autoloading
+
+- The kernel emits a **uevent** when a device is discovered; udev/mdev receives it through
+  netlink and asks `modprobe` to load a matching driver.
+- `MODULE_DEVICE_TABLE()` records device IDs in the module; `depmod` builds
+  `/lib/modules/<version>/modules.alias` and `modules.dep`.
+- `modprobe <module>` resolves dependencies and loads the module and its dependencies.
+- `/etc/modprobe.d/*.conf` supplies options and aliases (`options`, `alias`, `blacklist`).
+- Modules needed before the root filesystem is available must be in the **initramfs**; the rest
+  can be loaded on demand from the root filesystem.
+
+---
+layout: default
+---
 # Passing parameters to modules
 
 - Find available parameters: `modinfo usb-storage`.

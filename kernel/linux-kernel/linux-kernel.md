@@ -27,12 +27,12 @@ hideInToc: true
 - [**Kernel configuration and building**](/40)
 - [**Booting the kernel**](/58)
 - [**Kernel modules**](/66)
-- [**Developing kernel modules**](/69)
-- [**Hardware description & Device Tree**](/78)
-- [**Pin muxing (pinctrl)**](/92)
-- [**Device & driver model**](/98)
-- [**I2C subsystem**](/112)
-- [**Kernel frameworks**](/124)
+- [**Developing kernel modules**](/71)
+- [**Hardware description & Device Tree**](/84)
+- [**Pin muxing (pinctrl)**](/98)
+- [**Device & driver model**](/104)
+- [**I2C subsystem**](/120)
+- [**Kernel frameworks**](/132)
 ---
 layout: default
 hideInToc: true
@@ -40,18 +40,18 @@ hideInToc: true
 
 # Table of contents (2/2)
 
-- [**Memory management**](/163)
-- [**I/O memory**](/185)
-- [**Clocking & power management**](/191)
-- [**misc subsystem**](/221)
-- [**Processes & scheduling**](/225)
-- [**Interrupts & deferred work**](/238)
-- [**Locking**](/253)
-- [**Direct Memory Access (DMA)**](/263)
-- [**Kernel debugging**](/270)
-- [**Appendix: mmap()**](/275)
-- [**Resources**](/279)
-- [**Open source contributions**](/283)
+- [**Memory management**](/176)
+- [**I/O memory**](/198)
+- [**Clocking & power management**](/204)
+- [**misc subsystem**](/234)
+- [**Processes & scheduling**](/238)
+- [**Interrupts & deferred work**](/251)
+- [**Locking**](/266)
+- [**Direct Memory Access (DMA)**](/276)
+- [**Kernel debugging**](/283)
+- [**Appendix: mmap()**](/288)
+- [**Resources**](/292)
+- [**Open source contributions**](/296)
 ---
 src: ./slides/01-introduction.md
 ---
