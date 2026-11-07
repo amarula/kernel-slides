@@ -145,6 +145,6 @@ layout: default
   - `include/uapi/` — user-space ABI headers (installed as `/usr/include/linux/`).
 - `init/` — `main.c`, `version.c`, `initramfs.c`; `start_kernel()`.
 - `kernel/` — scheduler, locking, time, RCU, tracing, cgroups, modules.
-- `mm/` — page allocator, SLUB, vmalloc, page cache, reclaim, swap.
+- `mm/` — page allocator, SLUB, vmalloc, page cache and folios, reclaim, swap.
 - `lib/`, `net/`, `ipc/`, `security/`, `crypto/`, `block/`, `scripts/`, `tools/`,
   `Documentation/`.

@@ -41,17 +41,18 @@ hideInToc: true
 # Table of contents (2/2)
 
 - [**Memory management**](/184)
-- [**I/O memory**](/206)
-- [**Clocking & power management**](/212)
-- [**misc subsystem**](/242)
-- [**Processes & scheduling**](/246)
-- [**Interrupts & deferred work**](/259)
-- [**Locking**](/274)
-- [**Direct Memory Access (DMA)**](/286)
-- [**Kernel debugging**](/293)
-- [**Appendix: mmap()**](/301)
-- [**Resources**](/305)
-- [**Open source contributions**](/309)
+- [**VFS & page cache**](/208)
+- [**I/O memory**](/222)
+- [**Clocking & power management**](/228)
+- [**misc subsystem**](/258)
+- [**Processes & scheduling**](/262)
+- [**Interrupts & deferred work**](/275)
+- [**Locking**](/290)
+- [**Direct Memory Access (DMA)**](/302)
+- [**Kernel debugging**](/309)
+- [**Appendix: mmap()**](/317)
+- [**Resources**](/321)
+- [**Open source contributions**](/325)
 ---
 src: ./slides/01-introduction.md
 ---
@@ -105,45 +106,49 @@ src: ./slides/13-memory-management.md
 ---
 
 ---
-src: ./slides/14-io-memory.md
+src: ./slides/14-vfs-page-cache.md
 ---
 
 ---
-src: ./slides/15-clocking-power.md
+src: ./slides/15-io-memory.md
 ---
 
 ---
-src: ./slides/16-misc.md
+src: ./slides/16-clocking-power.md
 ---
 
 ---
-src: ./slides/17-processes-scheduling.md
+src: ./slides/17-misc.md
 ---
 
 ---
-src: ./slides/18-interrupts.md
+src: ./slides/18-processes-scheduling.md
 ---
 
 ---
-src: ./slides/19-locking.md
+src: ./slides/19-interrupts.md
 ---
 
 ---
-src: ./slides/20-dma.md
+src: ./slides/20-locking.md
 ---
 
 ---
-src: ./slides/21-debugging.md
+src: ./slides/21-dma.md
 ---
 
 ---
-src: ./slides/22-mmap.md
+src: ./slides/22-debugging.md
 ---
 
 ---
-src: ./slides/23-resources.md
+src: ./slides/23-mmap.md
 ---
 
 ---
-src: ./slides/24-contributions.md
+src: ./slides/24-resources.md
+---
+
+---
+src: ./slides/25-contributions.md
 ---

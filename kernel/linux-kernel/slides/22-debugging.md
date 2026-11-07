@@ -45,6 +45,8 @@ layout: default
 
 - A virtual filesystem to export debugging info to user space (`CONFIG_DEBUG_FS`).
 - Mount: `sudo mount -t debugfs none /sys/kernel/debug`.
+- `debugfs` is a pseudo filesystem on VFS: `debugfs_create_*()` installs dentries and file
+  operations; see the **VFS and page cache** chapter.
 
 ```c
 struct dentry *debugfs_create_dir(const char *name, struct dentry *parent);

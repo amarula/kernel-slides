@@ -71,11 +71,48 @@ layout: default
 
 # Page cache and anonymous memory
 
-- **Page cache** — file data read from storage is cached in RAM to avoid repeated disk access.
-  Written pages are marked **dirty** and must be written back to the backing device before reuse.
+- **Page cache** — file data cached in RAM to avoid repeated disk access; the unit is the
+  **folio**. An `address_space` stores folios in an XArray; dirty folios are written back before
+  reuse.
 - **Anonymous memory** — memory not backed by a file: program stacks, heaps, and explicit `mmap()`.
-  - A read returns a **zero-filled** page; a write allocates a real physical page.
-  - Anonymous pages are marked dirty and can be **swapped out** under memory pressure.
+  - A read returns a **zero-filled** folio; a write allocates a real physical folio.
+  - Anonymous folios are marked dirty and can be **swapped out** under memory pressure.
+
+---
+layout: default
+---
+# From pages to folios
+
+- `struct page` describes one physical page; `struct folio` describes a **head page plus its
+  order** — a physically contiguous, compound allocation.
+- The folio is the unit of memory management in the page cache and anonymous memory; `struct page`
+  is still used by page tables, slab and low-level allocation.
+- Helpers:
+  - `page_folio(page)` — head folio of a page;
+  - `folio_page(folio, n)` — n-th page in a folio;
+  - `folio_order()`, `folio_nr_pages()`, `folio_size()`, `folio_shift()`.
+- `struct folio` was introduced in Linux 5.16 (2021); the conversion is still ongoing.
+- Why folios: one refcount and one lock per compound allocation, type safety, and support for
+  large folios.
+
+---
+layout: default
+---
+# Folios in page cache and anon memory
+
+- **Page cache:** `address_space` stores folios in an XArray (`i_pages`);
+  `address_space_operations` is folio-based (`read_folio`, `writepages`, `dirty_folio`,
+  `invalidate_folio`, `release_folio`).
+- Page-cache helpers:
+  - `filemap_get_folio()`, `filemap_add_folio()`;
+  - `folio_mark_uptodate()`, `folio_mark_dirty()`, `folio_lock()`, `folio_mapping()`.
+- **Anonymous memory:** `do_anonymous_page()` allocates a folio and adds it to the reverse
+  mapping with `folio_add_new_anon_rmap()`.
+- Reclaim and writeback work on folios: `folio_test_dirty()`, `folio_test_writeback()`,
+  `folio_mapping()`.
+- Driver boundary: when an API gives you a `struct page *`, use `page_folio()`; to walk a folio,
+  use `folio_page()`.
+- See the **VFS and page cache** chapter for the file-backed side.
 
 ---
 layout: default
@@ -83,10 +120,10 @@ layout: default
 
 # Memory reclaim
 
-- **Reclaim** frees reclaimable pages and repurposes them:
-  - **Reclaimable** — page cache (data already on disk) and anonymous pages (swappable).
+- **Reclaim** frees reclaimable folios and repurposes them:
+  - **Reclaimable** — page-cache folios (data already on disk) and anonymous folios (swappable).
   - **Unreclaimable** — kernel internal structures and DMA buffers, pinned until freed by their owner.
-- Below the **low watermark**, `kswapd` wakes and frees pages asynchronously; below the **min
+- Below the **low watermark**, `kswapd` wakes and frees folios asynchronously; below the **min
   watermark**, allocations trigger **direct reclaim** and the allocating task stalls.
 - **Compaction** moves occupied pages to group free pages, enabling large physically-contiguous
   allocations; it runs via `kcompactd` (async) or on demand (sync).
@@ -193,8 +230,8 @@ layout: default
 # Multi-Gen LRU (MGLRU)
 
 - An alternative reclaim implementation replacing the classic **active/inactive** two-list LRU.
-- Pages are organized into **multiple generations** by access time, so the kernel can separate hot
-  from cold pages and make better eviction decisions — less `kswapd` CPU, better performance under
+- Folios are organized into **multiple generations** by access time, so the kernel can separate hot
+  from cold folios and make better eviction decisions — less `kswapd` CPU, better performance under
   memory pressure.
 - Enable with `CONFIG_LRU_GEN=y` and `CONFIG_LRU_GEN_ENABLED=y`; runtime control via
   `/sys/kernel/mm/lru_gen/enabled` (bitmask).
@@ -221,9 +258,9 @@ layout: default
 
 # zswap — compressed swap cache
 
-- A lightweight **compressed cache for swap pages**: pages being swapped out are compressed and
+- A lightweight **compressed cache for swap folios**: folios being swapped out are compressed and
   held in a RAM pool (using `zsmalloc`) instead of written straight to the swap device.
-- When the pool fills, pages are evicted to the backing swap device on an LRU basis.
+- When the pool fills, folios are evicted to the backing swap device on an LRU basis.
 - Configured via `/sys/module/zswap/parameters/`: `enabled`, `compressor` (e.g. `lzo`),
   `max_pool_percent`.
 - Benefits: less swap I/O, less wear on the swap device (e.g. SSD), better performance on
@@ -245,6 +282,8 @@ layout: default
 | Application changes | `MAP_HUGETLB` or `hugetlbfs` | none |
 | Swappable | no | yes |
 | Use case | explicit large-memory apps (DB, JVM) | general-purpose, transparent |
+
+- THP and HugeTLB are built on **large folios**: `folio_test_large()`, `folio_order()`.
 
 ---
 layout: default

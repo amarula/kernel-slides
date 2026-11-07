@@ -15,6 +15,8 @@ layout: default
 - Kernel Newbies: https://kernelnewbies.org/ (glossary, LinuxChanges)
 - eLinux wiki: https://elinux.org
 - LWN (Linux Weekly News): https://lwn.net/
+- VFS: `Documentation/filesystems/vfs.rst`; path lookup: `Documentation/filesystems/path-lookup.rst`
+- Page cache and folios: `Documentation/mm/page_cache.rst`
 - linux-insides: https://github.com/0xAX/linux-insides (CC BY-NC-SA 4.0)
 - Conferences: Embedded Linux Conference, Linux Plumbers, Kernel Recipes, linux.conf.au
 - Contributing: `Documentation/process/submitting-patches.rst`,

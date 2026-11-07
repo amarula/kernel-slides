@@ -839,6 +839,50 @@ d.label(40, 444, 840, 30, "Keep the top half short; sleepable work belongs in a 
 DIAGRAMS.append(d)
 
 
+# ---------------------------------------------------------------------------
+# 34. vfs-objects
+# ---------------------------------------------------------------------------
+d = D("vfs-objects", 960, 540)
+d.label(0, 6, 960, 26, "VFS objects and operation vectors", size=16, bold=True)
+d.box(370, 60, 220, 60, "super_block: s_op, s_root", fill=BLUE, font=WHITE, bold=True)
+d.box(80, 190, 240, 70, "inode: i_op, i_fop, i_mapping", fill=LIGHT)
+d.box(360, 190, 240, 70, "dentry: d_op, d_inode, d_parent", fill=LIGHT)
+d.box(640, 190, 240, 70, "file: f_op, f_path, private_data", fill=LIGHT)
+d.box(80, 350, 240, 70, "address_space: i_pages, a_ops, i_mmap", fill=YELLOW)
+d.box(360, 350, 240, 60, "folios (page cache)", fill=GREEN, font=WHITE, bold=True)
+d.edge(480, 120, 480, 190, label="s_root", lx=490, ly=140)
+d.edge(360, 225, 320, 225, label="d_inode", lx=320, ly=205)
+d.edge(640, 225, 600, 225, label="f_path", lx=600, ly=205)
+d.edge(200, 260, 200, 350, label="i_mapping", lx=210, ly=295)
+d.edge(320, 385, 360, 385, label="i_pages", lx=330, ly=365)
+d.label(80, 460, 800, 28, "Operations: super_operations · inode_operations · dentry_operations · file_operations · address_space_operations",
+        size=11, italic=True)
+DIAGRAMS.append(d)
+
+# ---------------------------------------------------------------------------
+# 35. folio-lifecycle
+# ---------------------------------------------------------------------------
+d = D("folio-lifecycle", 980, 300)
+d.label(0, 6, 980, 26, "Page-cache folio lifecycle", size=16, bold=True)
+d.box(30, 90, 160, 64, "allocated", fill=WHITE)
+d.box(220, 90, 160, 64, "uptodate", fill=GREEN, font=WHITE, bold=True)
+d.box(410, 90, 160, 64, "dirty", fill=YELLOW)
+d.box(600, 90, 160, 64, "writeback", fill=BLUE, font=WHITE, bold=True)
+d.box(790, 90, 160, 64, "clean / reclaim", fill=LIGHT)
+d.label(30, 160, 160, 20, "filemap_add_folio()", size=10, italic=True)
+d.label(220, 160, 160, 20, "folio_mark_uptodate()", size=10, italic=True)
+d.label(410, 160, 160, 20, "folio_mark_dirty()", size=10, italic=True)
+d.label(600, 160, 160, 20, "writepages()", size=10, italic=True)
+d.label(790, 160, 160, 20, "folio_put()", size=10, italic=True)
+d.edge(190, 122, 220, 122, label="read", lx=190, ly=100)
+d.edge(380, 122, 410, 122, label="write", lx=380, ly=100)
+d.edge(570, 122, 600, 122, label="dirty", lx=570, ly=100)
+d.edge(760, 122, 790, 122, label="I/O done", lx=750, ly=100, lw=70)
+d.label(30, 230, 920, 30, "filemap_get_folio() takes a reference; folio_put() drops it; folio_lock() serializes I/O and truncate.",
+        size=12, italic=True)
+DIAGRAMS.append(d)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for d in DIAGRAMS:

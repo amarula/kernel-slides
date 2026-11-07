@@ -39,3 +39,5 @@ layout: default
 - The MMU converts process virtual addresses to physical ones; the device driver is loaded and
   defines the `mmap` fop; no expensive read/write syscalls. Inspect with `/proc/<pid>/maps` or
   `pmap`; `devmem2` uses `mmap` on `/dev/mem`.
+- File-backed `mmap()` is different: it faults through `filemap_fault()` and page-cache folios
+  (see the **VFS and page cache** chapter); `remap_pfn_range()` is for driver MMIO.

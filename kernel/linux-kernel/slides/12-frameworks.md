@@ -116,6 +116,8 @@ struct file_operations {
 - Many operations exist; all are optional.
 - `open()`/`release()` are called on open/close (implement only if needed); `struct file` has a
   `void *private_data` you can use freely.
+- `file_operations` is the VFS `f_op`: the **VFS and page cache** chapter shows how `open()`,
+  `read()`, `write()` and `ioctl()` reach these callbacks.
 
 ---
 layout: default
