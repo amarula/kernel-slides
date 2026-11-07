@@ -19,5 +19,7 @@ devices and passing them around).
 To start the slide show:
 
 - `npm install`
-- `npm run dev drivers/base/regmap/regmap.md`
+- `npm run dev`
 - visit http://localhost:3030
+
+The main deck is `kernel/linux-kernel/linux-kernel.md`.

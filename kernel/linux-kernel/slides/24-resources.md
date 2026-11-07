@@ -26,16 +26,14 @@ layout: default
 layout: default
 hideInToc: true
 ---
-# Deep dives in this repo
+# Deep dives in this deck
 
-This deck merges the standalone subsystem presentations already in this repository:
+The material from the former standalone presentations now lives in these chapters:
 
-- `drivers/base/regmap/regmap.md` — the regmap register-access API
-- `drivers/clk/clk.md` — the clock subsystem and the Common Clock Framework
-- `drivers/devfreq/devfreq.md` — the devfreq (DVFS) subsystem
-- `drivers/base/devres.md` — the device resource manager (devres) internals
-- `kernel/locking/locking.md` — kernel locking and critical sections
-- `i2c-gpio.md` — the i2c-gpio bit-banging driver
+- `11-i2c.md` — I2C and the i2c-gpio bit-banging driver
+- `12-frameworks.md` — regmap, devres and the input subsystem
+- `16-clocking-power.md` — Common Clock Framework and devfreq
+- `20-locking.md` — locking and critical sections
 
 ---
 layout: default

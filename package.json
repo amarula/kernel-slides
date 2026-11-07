@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build",
-    "dev": "slidev --open",
-    "export": "slidev export"
+    "build": "slidev build kernel/linux-kernel/linux-kernel.md",
+    "dev": "slidev --open kernel/linux-kernel/linux-kernel.md",
+    "export": "slidev export kernel/linux-kernel/linux-kernel.md"
   },
   "dependencies": {
     "@slidev/cli": "^52.8.0",
