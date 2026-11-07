@@ -135,10 +135,10 @@ layout: default
 | Hard IRQ | `spin_lock_irqsave()` / `spin_unlock_irqrestore()` |
 | Another CPU only | `spin_lock()` / `spin_unlock()` |
 
-- `spin_lock_irqsave()` disables local interrupts and saves the previous state in `flags`;
-  `spin_lock_irq()` disables them without saving the state.
-- In a hard-IRQ handler, local interrupts are already disabled: `spin_lock()` is enough unless
-  the same lock is taken by another hard-IRQ handler.
+- `spin_lock_irqsave()` disables local interrupts and saves their previous state in `flags`;
+  `spin_lock_irq()` does not save it.
+- In hard-IRQ context interrupts are already off: `spin_lock()` suffices unless another
+  hard-IRQ handler shares the lock.
 
 ---
 layout: default

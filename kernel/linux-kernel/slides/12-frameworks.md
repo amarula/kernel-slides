@@ -832,7 +832,6 @@ void *__devres_alloc_node(dr_release_t release, size_t size, gfp_t gfp, int nid,
                           const char *name)
 {
     struct devres *dr;
-
     dr = alloc_dr(release, size, gfp | __GFP_ZERO, nid);
     if (unlikely(!dr))
         return NULL;
@@ -845,17 +844,11 @@ static __always_inline struct devres *alloc_dr(dr_release_t release,
 {
     size_t tot_size;
     struct devres *dr;
-
     if (!check_dr_size(size, &tot_size))
         return NULL;
-
     dr = kmalloc_node_track_caller(tot_size, gfp, nid);
     if (unlikely(!dr))
         return NULL;
-
-    if (!(gfp & __GFP_ZERO))       /* don't clear memory twice */
-        memset(dr, 0, offsetof(struct devres, data));
-
     devres_node_init(&dr->node, dr_node_release, dr_node_free);
     dr->release = release;
     return dr;
@@ -953,11 +946,9 @@ int devres_destroy(struct device *dev, dr_release_t release,
                    dr_match_t match, void *match_data)
 {
     void *res;
-
     res = devres_remove(dev, release, match, match_data);
     if (unlikely(!res))
         return -ENOENT;
-
     devres_free(res);
     return 0;
 }
@@ -969,10 +960,8 @@ int devres_destroy(struct device *dev, dr_release_t release,
 void devm_kfree(struct device *dev, const void *p)
 {
     int rc;
-
     if (unlikely(is_kernel_rodata((unsigned long)p) || ZERO_OR_NULL_PTR(p)))
         return;
-
     rc = devres_destroy(dev, devm_kmalloc_release,
                         devm_kmalloc_match, (void *)p);
     WARN_ON(rc);
@@ -1039,7 +1028,7 @@ layout: default
 hideInToc: true
 ---
 
-# devres_remove_group / devres_release_group
+# devres_remove_group
 
 ```c
 void devres_remove_group(struct device *dev, void *id)
@@ -1059,6 +1048,12 @@ void devres_remove_group(struct device *dev, void *id)
     kfree(grp);
 }
 ```
+
+---
+layout: default
+hideInToc: true
+---
+# devres_release_group
 
 ```c
 int devres_release_group(struct device *dev, void *id)

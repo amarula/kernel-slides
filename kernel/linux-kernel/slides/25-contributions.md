@@ -291,8 +291,16 @@ Date:   Wed Jan 4 14:08:37 2023 +0100
 
     Fixes: 36b661dc919da ("Merge branch 'next'")
     Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+```
 
-diff --git a/include/configs/imx8mn_bsh_smm_s2.h b/include/configs/imx8mn_bsh_s>
+---
+layout: default
+hideInToc: true
+---
+# Patch preparation - Diff
+
+```c
+diff --git a/include/configs/imx8mn_bsh_smm_s2.h b/include/configs/imx8mn_bsh_smm_s2.h
 index e97b8e871d22..deeed9c2f582 100644
 --- a/include/configs/imx8mn_bsh_smm_s2.h
 +++ b/include/configs/imx8mn_bsh_smm_s2.h
@@ -397,7 +405,15 @@ Date:   Wed Jan 4 14:08:37 2023 +0100
     Series-cc: Tom Rini <trini@konsulko.com>,
     Series-cc: Stefano Babic <sbabic@denx.de>,
     Series-cc: Fabio Estevam <festevam@gmail.com>
+```
 
+---
+layout: default
+hideInToc: true
+---
+# Patch posting - Diff
+
+```c
 diff --git a/include/configs/imx8mn_bsh_smm_s2.h b/include/configs/imx8mn_bsh_smm_s2.h
 index e97b8e871d22..deeed9c2f582 100644
 --- a/include/configs/imx8mn_bsh_smm_s2.h

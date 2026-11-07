@@ -15,7 +15,7 @@ layout: default
 - Kernel Newbies: https://kernelnewbies.org/ (glossary, LinuxChanges)
 - eLinux wiki: https://elinux.org
 - LWN (Linux Weekly News): https://lwn.net/
-- VFS: `Documentation/filesystems/vfs.rst`; path lookup: `Documentation/filesystems/path-lookup.rst`
+- VFS and path lookup: `Documentation/filesystems/{vfs,path-lookup}.rst`
 - Page cache and folios: `Documentation/mm/page_cache.rst`
 - linux-insides: https://github.com/0xAX/linux-insides (CC BY-NC-SA 4.0)
 - Conferences: Embedded Linux Conference, Linux Plumbers, Kernel Recipes, linux.conf.au
@@ -41,8 +41,6 @@ hideInToc: true
 ---
 
 # Inspiration & license
-
-This deck is a derivative of:
 
 - **Bootlin's "Linux kernel and driver development training"**
   - Slides: https://bootlin.com/doc/training/linux-kernel/

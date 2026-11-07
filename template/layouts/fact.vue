@@ -11,6 +11,7 @@ import { isDark } from '@slidev/client/logic/dark.ts'
     </div>
   </div>
   <table class="bottompanel">
+    <tbody>
       <tr>
         <th style="text-align:left; padding-left:8px">
           <a href="https://www.amarulasolutions.com">https://www.amarulasolutions.com</a>
@@ -19,5 +20,6 @@ import { isDark } from '@slidev/client/logic/dark.ts'
           <SlideCurrentNo />
         </th>
       </tr>
+    </tbody>
   </table>
 </template>

@@ -29,6 +29,7 @@ const props = defineProps({
     </div>
   </div>
   <table class="bottompanel">
+    <tbody>
     <tr>
       <th style="text-align:left; padding-left:8px">
         <a href="https://www.amarulasolutions.com">https://www.amarulasolutions.com</a>
@@ -37,6 +38,7 @@ const props = defineProps({
         <SlideCurrentNo />
       </th>
     </tr>
+    </tbody>
   </table>
 </template>
 

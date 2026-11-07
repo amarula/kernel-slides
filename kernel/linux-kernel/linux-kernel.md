@@ -40,19 +40,19 @@ hideInToc: true
 
 # Table of contents (2/2)
 
-- [**Memory management**](/184)
-- [**VFS & page cache**](/208)
-- [**I/O memory**](/222)
-- [**Clocking & power management**](/228)
-- [**misc subsystem**](/258)
-- [**Processes & scheduling**](/262)
-- [**Interrupts & deferred work**](/275)
-- [**Locking**](/290)
-- [**Direct Memory Access (DMA)**](/302)
-- [**Kernel debugging**](/309)
-- [**Appendix: mmap()**](/317)
-- [**Resources**](/321)
-- [**Open source contributions**](/325)
+- [**Memory management**](/185)
+- [**VFS & page cache**](/209)
+- [**I/O memory**](/223)
+- [**Clocking & power management**](/229)
+- [**misc subsystem**](/259)
+- [**Processes & scheduling**](/263)
+- [**Interrupts & deferred work**](/276)
+- [**Locking**](/291)
+- [**Direct Memory Access (DMA)**](/303)
+- [**Kernel debugging**](/310)
+- [**Appendix: mmap()**](/318)
+- [**Resources**](/322)
+- [**Open source contributions**](/326)
 ---
 src: ./slides/01-introduction.md
 ---
