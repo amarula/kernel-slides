@@ -786,23 +786,25 @@ for i in range(len(stages) - 1):
 DIAGRAMS.append(d)
 
 # ---------------------------------------------------------------------------
-# 32. cfs-rbtree
+# 32. eevdf-rbtree
 # ---------------------------------------------------------------------------
-d = D("cfs-rbtree", 760, 400)
-d.label(0, 6, 760, 26, "CFS runqueue: red-black tree ordered by vruntime", size=16, bold=True)
-d.box(320, 60, 110, 44, "vruntime = 40", fill=LIGHT)
-d.box(160, 160, 110, 44, "vruntime = 25", fill=LIGHT)
-d.box(490, 160, 110, 44, "vruntime = 60", fill=LIGHT)
-d.box(80, 270, 110, 44, "vruntime = 10\n← leftmost", fill=YELLOW, bold=True)
-d.box(240, 270, 110, 44, "vruntime = 30", fill=LIGHT)
-d.box(410, 270, 110, 44, "vruntime = 50", fill=LIGHT)
-d.box(570, 270, 110, 44, "vruntime = 80", fill=LIGHT)
-d.edge(375, 104, 215, 160)
-d.edge(375, 104, 545, 160)
-d.edge(215, 204, 135, 270)
-d.edge(215, 204, 295, 270)
-d.edge(545, 204, 465, 270)
-d.edge(545, 204, 625, 270)
+d = D("eevdf-rbtree", 880, 460)
+d.label(0, 6, 880, 26, "EEVDF runqueue: eligible tasks ordered by virtual deadline", size=16, bold=True)
+d.box(350, 60, 180, 54, "vruntime=40\nvd=45, lag>0", fill=GREEN, font=WHITE, bold=True)
+d.box(170, 170, 180, 54, "vruntime=25\nvd=30, lag>0", fill=GREEN, font=WHITE, bold=True)
+d.box(530, 170, 180, 54, "vruntime=60\nvd=70, lag<0", fill=GRAY, font=WHITE, bold=True)
+d.box(70, 290, 180, 64, "vruntime=10\nvd=20, lag>0\n← earliest eligible vd", fill=YELLOW, bold=True)
+d.box(270, 290, 180, 54, "vruntime=30\nvd=38, lag>0", fill=GREEN, font=WHITE, bold=True)
+d.box(470, 290, 180, 54, "vruntime=50\nvd=58, lag>0", fill=GREEN, font=WHITE, bold=True)
+d.box(670, 290, 180, 54, "vruntime=80\nvd=95, lag<0", fill=GRAY, font=WHITE, bold=True)
+d.edge(400, 114, 260, 170)
+d.edge(480, 114, 620, 170)
+d.edge(230, 224, 160, 290)
+d.edge(290, 224, 360, 290)
+d.edge(600, 224, 560, 290)
+d.edge(650, 224, 760, 290)
+d.label(40, 390, 800, 30, "Eligible = lag ≥ 0. Pick the eligible task with the earliest virtual deadline (VD).",
+        size=12, italic=True)
 DIAGRAMS.append(d)
 
 

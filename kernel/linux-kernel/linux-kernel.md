@@ -45,13 +45,13 @@ hideInToc: true
 - [**Clocking & power management**](/191)
 - [**misc subsystem**](/221)
 - [**Processes & scheduling**](/225)
-- [**Interrupts & deferred work**](/233)
-- [**Locking**](/248)
-- [**Direct Memory Access (DMA)**](/258)
-- [**Kernel debugging**](/265)
-- [**Appendix: mmap()**](/270)
-- [**Resources**](/274)
-- [**Open source contributions**](/278)
+- [**Interrupts & deferred work**](/238)
+- [**Locking**](/253)
+- [**Direct Memory Access (DMA)**](/263)
+- [**Kernel debugging**](/270)
+- [**Appendix: mmap()**](/275)
+- [**Resources**](/279)
+- [**Open source contributions**](/283)
 ---
 src: ./slides/01-introduction.md
 ---
