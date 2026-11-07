@@ -1,5 +1,9 @@
 node_modules
 
+# Build and export artifacts
+dist
+*-export.pdf
+
 # Reference/training PDFs (not committed)
 Introduction to Linux Kernel.pdf
 contribuition/bootlin/*.pdf
