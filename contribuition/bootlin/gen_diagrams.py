@@ -806,6 +806,37 @@ d.edge(545, 204, 625, 270)
 DIAGRAMS.append(d)
 
 
+# ---------------------------------------------------------------------------
+# 33. irq-flow
+# ---------------------------------------------------------------------------
+d = D("irq-flow", 920, 500)
+d.label(0, 6, 920, 26, "Interrupt path: from the device to deferred work", size=16, bold=True)
+d.label(20, 44, 260, 22, "Hard IRQ context", size=13, bold=True)
+d.box(40, 76, 140, 58, "Device\nraises IRQ", fill=WHITE)
+d.box(220, 76, 160, 58, "Interrupt\ncontroller", fill=BLUE, font=WHITE, bold=True)
+d.box(420, 76, 160, 58, "CPU entry\n(IRQ vector)", fill=LIGHT)
+d.box(620, 76, 260, 58, "Flow handler\nhandle_edge_irq /\nhandle_level_irq", fill=YELLOW)
+d.edge(180, 105, 220, 105)
+d.edge(380, 105, 420, 105)
+d.edge(580, 105, 620, 105)
+d.box(420, 186, 160, 56, "mask / ack /\nEOI", fill=LIGHT)
+d.box(620, 186, 260, 56, "Driver action handler\n(top half, short)", fill=BLUE, font=WHITE, bold=True)
+d.edge(700, 134, 700, 186)
+d.edge(620, 105, 580, 186, dashed=True)
+d.label(20, 310, 300, 22, "Deferred work (softirq or process context)", size=13, bold=True)
+d.box(40, 344, 200, 64, "Softirq\nnet, timers, RCU", fill=YELLOW)
+d.box(270, 344, 200, 64, "Threaded IRQ\nprocess context", fill=GREEN, font=WHITE, bold=True)
+d.box(500, 344, 200, 64, "Workqueue\nprocess context", fill=GREEN, font=WHITE, bold=True)
+d.box(730, 344, 150, 64, "kthread /\nworker", fill=WHITE)
+d.edge(700, 242, 140, 344, dashed=True, label="defer", lx=330, ly=285)
+d.edge(700, 242, 370, 344, dashed=True)
+d.edge(700, 242, 600, 344, dashed=True)
+d.edge(700, 408, 730, 408)
+d.label(40, 444, 840, 30, "Keep the top half short; sleepable work belongs in a threaded IRQ or a workqueue.",
+        size=12, italic=True)
+DIAGRAMS.append(d)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for d in DIAGRAMS:

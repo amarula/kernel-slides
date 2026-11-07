@@ -2,7 +2,7 @@
 layout: section
 hideInToc: true
 ---
-# Processes, scheduling & interrupts
+# Processes & scheduling
 
 ---
 layout: default
@@ -95,69 +95,3 @@ layout: default
 - **Completions**: `wait_for_completion()`, `complete()`, `complete_all()`, `reinit_completion()`.
 - Blocking helpers: `udelay()` (atomic, ≤10µs), `usleep_range()`/`msleep()` (sleep), `fsleep()`.
 
----
-layout: default
----
-# Registering an interrupt handler
-
-```c
-int devm_request_irq(struct device *dev, unsigned int irq, irq_handler_t handler,
-                     unsigned long irq_flags, const char *devname, void *dev_id);
-```
-
-- `irq`: IRQ channel (use `platform_get_irq()`); `devname` for `/proc/interrupts` (use
-  `pdev->name`); `dev_id`: opaque pointer (per-device data; cannot be NULL on a shared line).
-- Common `irq_flags`: `IRQF_SHARED` (shared line — all handlers called), `IRQF_ONESHOT`
-  (threaded interrupts; line kept disabled until the thread runs).
-
-```c
-irqreturn_t foo_interrupt(int irq, void *dev_id);   /* returns IRQ_HANDLED, IRQ_NONE, IRQ_WAKE_THREAD */
-```
-
----
-layout: default
----
-# Interrupt handler constraints
-
-- No guarantee which address space is active — **can't transfer data to/from user space**.
-- Runs outside the scheduler — **cannot sleep** (use `GFP_ATOMIC`).
-- Runs with all interrupts disabled on the local CPU — must **complete quickly**.
-- A typical handler: acknowledge the interrupt, read/write data, wake up waiters on a
-  per-device queue.
-
----
-layout: default
----
-# Top half and bottom half
-
-- Hard IRQ handlers run with interrupts masked; no nesting; higher-priority IRQs are delayed.
-- **Top half** = the real handler (as fast as possible); **bottom half** = deferred mechanisms for
-  post-processing:
-  - **softirqs** (interrupt context, interrupts enabled, no sleeping; subsystem use — network…);
-  - **threaded IRQs** (`IRQ_WAKE_THREAD`, process context, may sleep);
-  - **workqueues** (general-purpose deferred work, process context).
----
-layout: default
-hideInToc: true
----
-# Top half and bottom half
-
-<div style="text-align:center;">
-  <img src="/images/softirq-flow.svg" style="background:white; border-radius:14px; padding:10px; max-height:480px; max-width:90%;" />
-</div>
----
-layout: default
----
-# Threaded IRQs & workqueues
-
-- **Threaded interrupts** (`devm_request_threaded_irq`) run a `thread_fn` in process context;
-  may sleep; priority tunable; heavily used by PREEMPT_RT.
-- **Workqueues** defer work generally (background jobs). Works (`INIT_WORK`) become threads
-  running in process context (interrupts enabled, sleeping allowed); queue with `schedule_work()`.
-
-| Mechanism | Context | IRQs | Can sleep | Typical use |
-| --- | --- | --- | --- | --- |
-| Hard IRQ | interrupt | disabled | No | fast handling |
-| Softirq | interrupt | enabled | No | net, timers, RCU |
-| Threaded IRQ | process | enabled | Yes | blocking IRQ handling |
-| Workqueue | process | enabled | Yes | background workers |

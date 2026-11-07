@@ -32,6 +32,7 @@ hideInToc: true
 - [**Pin muxing (pinctrl)**](/92)
 - [**Device & driver model**](/98)
 - [**I2C subsystem**](/112)
+- [**Kernel frameworks**](/124)
 ---
 layout: default
 hideInToc: true
@@ -39,18 +40,18 @@ hideInToc: true
 
 # Table of contents (2/2)
 
-- [**Kernel frameworks**](/124)
 - [**Memory management**](/163)
 - [**I/O memory**](/185)
 - [**Clocking & power management**](/191)
 - [**misc subsystem**](/221)
-- [**Processes, scheduling & interrupts**](/225)
-- [**Locking**](/238)
-- [**Direct Memory Access (DMA)**](/248)
-- [**Kernel debugging**](/255)
-- [**Appendix: mmap()**](/260)
-- [**Resources**](/264)
-- [**Open source contributions**](/268)
+- [**Processes & scheduling**](/225)
+- [**Interrupts & deferred work**](/233)
+- [**Locking**](/248)
+- [**Direct Memory Access (DMA)**](/258)
+- [**Kernel debugging**](/265)
+- [**Appendix: mmap()**](/270)
+- [**Resources**](/274)
+- [**Open source contributions**](/278)
 ---
 src: ./slides/01-introduction.md
 ---
@@ -116,29 +117,33 @@ src: ./slides/16-misc.md
 ---
 
 ---
-src: ./slides/17-processes-scheduling-interrupts.md
+src: ./slides/17-processes-scheduling.md
 ---
 
 ---
-src: ./slides/18-locking.md
+src: ./slides/18-interrupts.md
 ---
 
 ---
-src: ./slides/19-dma.md
+src: ./slides/19-locking.md
 ---
 
 ---
-src: ./slides/20-debugging.md
+src: ./slides/20-dma.md
 ---
 
 ---
-src: ./slides/21-mmap.md
+src: ./slides/21-debugging.md
 ---
 
 ---
-src: ./slides/22-resources.md
+src: ./slides/22-mmap.md
 ---
 
 ---
-src: ./slides/23-contributions.md
+src: ./slides/23-resources.md
+---
+
+---
+src: ./slides/24-contributions.md
 ---
