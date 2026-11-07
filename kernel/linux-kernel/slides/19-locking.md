@@ -124,6 +124,40 @@ void spin_unlock_bh(spinlock_t *lock);
 ---
 layout: default
 ---
+# Locking between contexts
+
+- Choose the lock variant based on **who else can take the lock**:
+
+| Shared with | Use |
+| --- | --- |
+| Process context only | `mutex_lock()` (may sleep) |
+| Softirq / tasklet | `spin_lock_bh()` / `spin_unlock_bh()` |
+| Hard IRQ | `spin_lock_irqsave()` / `spin_unlock_irqrestore()` |
+| Another CPU only | `spin_lock()` / `spin_unlock()` |
+
+- `spin_lock_irqsave()` disables local interrupts and saves the previous state in `flags`;
+  `spin_lock_irq()` disables them without saving the state.
+- In a hard-IRQ handler, local interrupts are already disabled: `spin_lock()` is enough unless
+  the same lock is taken by another hard-IRQ handler.
+
+---
+layout: default
+---
+# Real-time locking
+
+- On **PREEMPT_RT**, most `spinlock_t` and `rwlock_t` become **sleeping RT-mutexes**:
+  - critical sections can be preempted;
+  - priority inheritance prevents unbounded priority inversion.
+- IRQ handlers are forced into threads (`IRQF_NO_THREAD` is the exception); threaded IRQs are
+  the normal path.
+- `local_lock_t` protects per-CPU data without disabling preemption globally.
+- `raw_spinlock_t` remains a true spinning lock for core code that cannot sleep.
+- Userspace can set RT priorities with `sched_setscheduler()` / `chrt`; `SCHED_DEADLINE` adds
+  bandwidth reservations.
+
+---
+layout: default
+---
 # Deadlocks & debugging
 
 - **Rule 1:** don't call a function that can acquire the same lock.

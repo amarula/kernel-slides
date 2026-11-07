@@ -64,6 +64,59 @@ layout: default
 ---
 layout: default
 ---
+# System call entry and dispatch
+
+- Userspace puts the syscall number and arguments in registers, then executes the architecture's
+  syscall instruction (`syscall` on x86-64, `svc` on ARM64).
+- The CPU switches to kernel mode and saves the register state in `struct pt_regs`.
+- On x86-64, `do_syscall_64()` calls `x64_sys_call()`, whose switch is generated from
+  `arch/x86/entry/syscalls/syscall_64.tbl`.
+- `syscall_enter_from_user_mode()` / `syscall_exit_to_user_mode()` handle tracing, seccomp,
+  signals and rescheduling around the call.
+- Handlers are defined with `SYSCALL_DEFINE*()`:
+
+```c
+SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
+{
+    if (force_o_largefile())
+        flags |= O_LARGEFILE;
+    return do_sys_open(AT_FDCWD, filename, flags, mode);
+}
+```
+
+- `sys_call_table[]` still exists for tracing, but is no longer the x86-64 dispatch path.
+
+---
+layout: default
+---
+# vDSO and vsyscall
+
+- Some syscalls are performance-critical (time, `getcpu`…); the kernel maps a **vDSO** page into
+  every process.
+- `clock_gettime()`, `gettimeofday()`, `time()` and `getcpu()` can be served entirely in
+  userspace from the vDSO, with **no privilege transition**.
+- The vDSO reads kernel-maintained time data (seqlock-protected) so it stays coherent.
+- `vsyscall` is the legacy x86-64 fixed-address page; modern kernels emulate it or disable it:
+  `vsyscall=emulate|none|xonly`.
+- The C library chooses the vDSO path transparently; applications do not call it directly.
+
+---
+layout: default
+---
+# Running a program: execve()
+
+- `execve()` **replaces** the current process image; it does not create a new process.
+- Path: `SYSCALL_DEFINE3(execve)` → `do_execveat_common()` → `bprm_execve()` →
+  `exec_binprm()` → `search_binary_handler()` → `load_elf_binary()`.
+- The kernel opens the file, reads the ELF header, builds a new address space and stack, copies
+  `argv`/`envp`, and prepares the new entry point.
+- `load_elf_binary()` calls `START_THREAD()` → `start_thread()`, which sets the new instruction
+  pointer and stack pointer.
+- On success, `execve()` never returns; on failure it returns `-errno`.
+
+---
+layout: default
+---
 # Kernel memory constraints
 
 - **No memory protection**: the kernel doesn't recover from illegal memory accesses — it dumps

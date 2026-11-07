@@ -41,6 +41,36 @@ layout: default
 ---
 layout: default
 ---
+# The release cycle
+
+- Each release starts with a **two-week merge window**:
+  - Torvalds pulls new features from subsystem trees;
+  - the `master` branch is unstable during this period.
+- The merge window closes and **`-rc1`** is tagged.
+- For the next **6–10 weeks**, weekly **release candidates** (`-rc2` … `-rc7`) are published:
+  - only bug fixes and regression fixes;
+  - no new features.
+- When the release is considered stable, the final version is tagged and the cycle restarts.
+- A typical cycle lasts **9–11 weeks**.
+
+---
+layout: default
+---
+# What goes into a release?
+
+- **Merge window:** new features, new drivers, new APIs and cleanups.
+- **`-rc` phase:** fixes only — regressions, build failures, security issues.
+- **Stable releases:** after the final tag, the stable team backports selected fixes to
+  `7.3.1`, `7.3.2`, …; no new features.
+- **LTS:** selected releases get long-term maintenance (6.12, 6.18, …).
+- **`linux-next`:** integration tree where subsystem trees are merged before the merge window;
+  it catches cross-tree conflicts early.
+- **Rule of thumb:** if a change is not ready before the merge window closes, it waits for the
+  next cycle.
+
+---
+layout: default
+---
 # Need to further stabilize official kernels
 
 - **Issue:** bug and security fixes are only merged into the `master` branch — you must update to
@@ -92,17 +122,29 @@ layout: default
 ---
 layout: default
 ---
+# Source tree tour: arch and drivers
 
-# Linux source organization
+- `arch/<arch>/` — one directory per architecture:
+  - `kernel/`, `mm/`, `lib/`, `boot/`, `include/asm/`;
+  - overrides generic code and provides optimized routines (`memcpy`, checksums).
+- `drivers/` — the largest part of the tree:
+  - `char/`, `block/`, `net/`, `scsi/`, `usb/`, `i2c/`, `spi/`, `gpio/`, `mmc/`, `dma/`…;
+  - bus-specific, class-specific and platform-specific drivers.
+- `sound/`, `gpu/`, `media/`, `input/` — framework-specific driver trees.
+- `firmware/` — firmware blobs and build-time firmware data.
 
-- `Documentation/` — kernel documentation.
-- `arch/` — one subdirectory per architecture; each holds `kernel/`, `lib/`, `mm/`, `boot/`, …
-  that override architecture-independent stubs; `lib/` has optimized routines (memcpy,
-  checksums…).
-- `drivers/` — the largest amount of code; device, bus, platform, and general directories
-  (`drivers/char`, `drivers/block`, `drivers/net`, `drivers/scsi`, …).
-- `fs/` — the VFS framework plus per-filesystem subdirectories.
-- `include/` — `include/linux` (kernel headers), `include/asm-generic` (generic arch code),
-  `include/uapi` (the user-space API, becomes `/usr/include/linux/` on install).
-- `init/` — main kernel initialization (`version.c` prints the version banner at boot).
-- `kernel/`, `mm/`, `lib/`, `net/`, `ipc/`, `scripts/`, `tools/`, …
+---
+layout: default
+---
+# Source tree tour: core, fs and include
+
+- `fs/` — the VFS framework plus one directory per filesystem (`ext4/`, `btrfs/`, `xfs/`…).
+- `include/`:
+  - `include/linux/` — kernel-internal headers;
+  - `include/asm-generic/` — portable architecture fallbacks;
+  - `include/uapi/` — user-space ABI headers (installed as `/usr/include/linux/`).
+- `init/` — `main.c`, `version.c`, `initramfs.c`; `start_kernel()`.
+- `kernel/` — scheduler, locking, time, RCU, tracing, cgroups, modules.
+- `mm/` — page allocator, SLUB, vmalloc, page cache, reclaim, swap.
+- `lib/`, `net/`, `ipc/`, `security/`, `crypto/`, `block/`, `scripts/`, `tools/`,
+  `Documentation/`.

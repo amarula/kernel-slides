@@ -22,6 +22,25 @@ layout: default
 ---
 layout: default
 ---
+# Dynamic debug in practice
+
+- `CONFIG_DYNAMIC_DEBUG` compiles `pr_debug()` / `dev_dbg()` calls but leaves them disabled.
+- Control file: `/proc/dynamic_debug/control` (also available through debugfs).
+- Enable by matching source file, function, line, module or format string:
+
+```console
+$ echo 'file foo.c line 42 +p' > /proc/dynamic_debug/control
+$ echo 'module foo +p' > /proc/dynamic_debug/control
+$ echo 'func foo_probe +p' > /proc/dynamic_debug/control
+```
+
+- `+p` enables, `-p` disables; `=p` sets the flags exactly.
+- Enable at boot with `dyndbg="file foo.c +p"` on the kernel command line.
+- Check the current state: `grep foo /proc/dynamic_debug/control`.
+
+---
+layout: default
+---
 # DebugFS
 
 - A virtual filesystem to export debugging info to user space (`CONFIG_DEBUG_FS`).
@@ -40,6 +59,29 @@ struct dentry *debugfs_create_blob(const char *name, mode_t mode,
 ---
 layout: default
 ---
+# Decoding an oops
+
+- An oops prints a register dump, a stack trace and the faulting instruction (RIP/EIP).
+- Build the kernel with `CONFIG_DEBUG_INFO=y` and keep `vmlinux`.
+- With debug info:
+
+```console
+$ gdb vmlinux
+(gdb) list *0xffffffff81234567
+```
+
+- Without debug info, use the symbol+offset from the oops:
+
+```console
+$ ./scripts/faddr2line vmlinux foo_driver+0x1a/0x40
+```
+
+- `CONFIG_KALLSYMS` / `CONFIG_KALLSYMS_ALL` improve symbol resolution.
+- `scripts/decode_stacktrace.sh` resolves a pasted stack trace against `vmlinux`.
+
+---
+layout: default
+---
 # kgdb, JTAG, early traces
 
 - **Magic SysRq**: debug/rescue commands even when the kernel is in trouble (`h` help, `s` sync,
@@ -50,6 +92,25 @@ layout: default
 - **Early traces**: if it breaks before the console is up (`CONFIG_DEBUG_LL` + `earlyprintk` on
   ARM, or `CONFIG_SERIAL_EARLYCON`).
 - Tips: enable `CONFIG_KALLSYMS_ALL`, `CONFIG_DEBUG_INFO`, `CONFIG_DEBUG_DRIVER`.
+
+---
+layout: default
+---
+# Tracing: ftrace, perf and BPF
+
+- **ftrace** — built-in tracer (`CONFIG_FUNCTION_TRACER`, `CONFIG_FTRACE`):
+  - `/sys/kernel/tracing/` (or `/sys/kernel/debug/tracing/`);
+  - function tracer, function_graph, event tracers, `trace-cmd`.
+- **perf** — sampling and hardware/software events:
+  - `perf top`, `perf record` / `perf report`, `perf trace`.
+- **BPF** — programmable tracing with kprobes, tracepoints and `bpftrace`:
+
+```console
+$ bpftrace -e 'kprobe:do_sys_open { printf("%s\n", comm); }'
+```
+
+- Use ftrace for "what is the kernel doing?" and perf/BPF for latency and frequency analysis.
+- `trace_printk()` is only for early debugging; remove it before upstreaming.
 
 ---
 layout: default

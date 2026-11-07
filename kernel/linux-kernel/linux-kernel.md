@@ -23,16 +23,16 @@ hideInToc: true
 
 - [**Linux kernel introduction**](/4)
 - [**Linux kernel sources**](/15)
-- [**Linux kernel source code**](/24)
-- [**Kernel configuration and building**](/40)
-- [**Booting the kernel**](/58)
-- [**Kernel modules**](/66)
-- [**Developing kernel modules**](/71)
-- [**Hardware description & Device Tree**](/84)
-- [**Pin muxing (pinctrl)**](/98)
-- [**Device & driver model**](/104)
-- [**I2C subsystem**](/120)
-- [**Kernel frameworks**](/132)
+- [**Linux kernel source code**](/27)
+- [**Kernel configuration and building**](/46)
+- [**Booting the kernel**](/64)
+- [**Kernel modules**](/72)
+- [**Developing kernel modules**](/77)
+- [**Hardware description & Device Tree**](/90)
+- [**Pin muxing (pinctrl)**](/104)
+- [**Device & driver model**](/110)
+- [**I2C subsystem**](/126)
+- [**Kernel frameworks**](/139)
 ---
 layout: default
 hideInToc: true
@@ -40,18 +40,18 @@ hideInToc: true
 
 # Table of contents (2/2)
 
-- [**Memory management**](/176)
-- [**I/O memory**](/198)
-- [**Clocking & power management**](/204)
-- [**misc subsystem**](/234)
-- [**Processes & scheduling**](/238)
-- [**Interrupts & deferred work**](/251)
-- [**Locking**](/266)
-- [**Direct Memory Access (DMA)**](/276)
-- [**Kernel debugging**](/283)
-- [**Appendix: mmap()**](/288)
-- [**Resources**](/292)
-- [**Open source contributions**](/296)
+- [**Memory management**](/184)
+- [**I/O memory**](/206)
+- [**Clocking & power management**](/212)
+- [**misc subsystem**](/242)
+- [**Processes & scheduling**](/246)
+- [**Interrupts & deferred work**](/259)
+- [**Locking**](/274)
+- [**Direct Memory Access (DMA)**](/286)
+- [**Kernel debugging**](/293)
+- [**Appendix: mmap()**](/301)
+- [**Resources**](/305)
+- [**Open source contributions**](/309)
 ---
 src: ./slides/01-introduction.md
 ---

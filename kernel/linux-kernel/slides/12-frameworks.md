@@ -295,6 +295,23 @@ input_sync(dev);
 ---
 layout: default
 ---
+# Input device registration
+
+- Allocate and configure an `input_dev`:
+  - `devm_input_allocate_device(&pdev->dev)`;
+  - `input_set_capability(dev, EV_KEY, KEY_ENTER)` or `set_bit()` on `evbit`/`keybit`/`absbit`;
+  - set `dev->name`, `dev->phys` and `dev->id.*`.
+- Register with `input_register_device(dev)`; unregister with `input_unregister_device()`.
+- Report events from the IRQ handler or polling callback:
+  - `input_report_key()`, `input_report_abs()`, `input_report_rel()`;
+  - `input_sync()` terminates an event packet.
+- `gpio-keys` is a minimal example: a platform driver that reads GPIOs and reports key events.
+- Multi-touch devices use slots: `input_mt_init_slots()`, `input_mt_slot()`,
+  `input_mt_report_slot_state()`.
+
+---
+layout: default
+---
 
 # What is regmap?
 
