@@ -100,8 +100,9 @@ layout: default
 
 
 - **Page allocator** — contiguous physical pages (powers of two), identity-mapped.
-- **SLAB** — caches of same-size objects (grows/shrinks as needed).
-- **kmalloc** — general purpose, physically contiguous (SLAB for small, page allocator for large).
+- **SLUB** — caches of same-size objects (grows/shrinks as needed); the only slab allocator
+  since the old SLAB implementation was removed.
+- **kmalloc** — general purpose, physically contiguous (SLUB for small, page allocator for large).
 - **vmalloc** — large, *non*-physically-contiguous areas (not for DMA).
 ---
 layout: default
@@ -118,7 +119,8 @@ layout: default
 # Page allocator
 
 - For medium-size allocations; a page is usually 4 KiB (some archs: 4/8/16/64 KiB).
-- **Buddy allocator** → only power-of-two page counts (1, 2, 4, 8…); typical max 8192 KiB.
+- **Buddy allocator** → only power-of-two page counts (1, 2, 4, 8…); default max order is 10
+  (4 MiB), configurable per architecture via `CONFIG_ARCH_FORCE_MAX_ORDER`.
 - Returns physically contiguous pages in the identity-mapped area (fragmentation matters; CMA can
   reserve memory at boot).
 
@@ -136,7 +138,7 @@ void free_pages(unsigned long addr, unsigned int order);
 ---
 layout: default
 ---
-# SLAB allocator
+# SLUB allocator
 
 
 
@@ -144,12 +146,12 @@ layout: default
 - Used for frequently-instantiated structures (directory entries, file objects, packet descriptors,
   process descriptors). See `/proc/slabinfo`.
 - Implementations: `CONFIG_SLUB` (default), `CONFIG_SLUB_TINY` (minimal footprint).
-- `kmalloc` relies on generic `kmalloc-XXX` SLAB caches for small sizes.
+- `kmalloc` relies on generic `kmalloc-XXX` SLUB caches for small sizes.
 ---
 layout: default
 hideInToc: true
 ---
-# SLAB allocator
+# SLUB allocator
 
 <div style="text-align:center;">
   <img src="/images/slab-caches.svg" style="background:white; border-radius:14px; padding:10px; max-height:480px; max-width:90%;" />
@@ -175,7 +177,7 @@ layout: default
 # kmalloc, vmalloc, devm
 
 - `void *kmalloc(size_t size, gfp_t flags);` + `kfree()` — primary allocator, physically
-  contiguous, sizes rounded up to the smallest SLAB cache. `kzalloc()` zeroes, `kcalloc()` arrays,
+  contiguous, sizes rounded up to the smallest SLUB cache. `kzalloc()` zeroes, `kcalloc()` arrays,
   `krealloc()` resizes.
 - `void *vmalloc(unsigned long size);` + `vfree()` — non-contiguous pages; large areas possible;
   not for DMA.

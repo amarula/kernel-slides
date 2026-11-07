@@ -24,7 +24,7 @@ layout: default
   branches took 2–3 years to merge (too slow!).
 - Since 2003: a new official release about **every 10 weeks**.
   - 2.6 (Dec 2003) → 2.6.39 (May 2011) · 3.0 → 3.19 · 4.0 → 4.20
-  - 5.0 → 5.19 · 6.0 (Oct 2022) → 6.19 · 7.0 (Apr 2026) → …
+  - 5.0 → 5.19 · 6.0 (Oct 2022) → 6.19 · 7.0 (Apr 2026) → 7.3 (Oct 2026) · 7.4-rc1 (Nov 2026)
 - Features are added progressively; since 2003 developers have done so without a massively
   incompatible development branch.
 - **Major version numbers have no specific meaning!**
@@ -82,12 +82,12 @@ layout: default
 ---
 # Linux kernel size and structure
 
-- Linux v6.19 sources: close to **92k files, 42M lines, 1.4 GiB** — but a compressed kernel is
+- Linux v7.3 sources: close to **96k files, 41M lines, 1.8 GiB** — but a compressed kernel is
   only a few megabytes.
 - Why so big? Numerous device drivers, network protocols, architectures, filesystems — the core
   is small!
-- By number of lines: `drivers/` 61%, `arch/` 12%, `tools/` 5.4%, `sound/` 3.9%, `fs/` 3.8%,
-  `Documentation/` 3.8%, `include/` 3.4%, `net/` 3.1%, `kernel/` 1.3%, `lib/` 0.8%, `mm/` 0.5%…
+- By lines (cloc, v7.3): `drivers/` 65%, `arch/` 6%, `tools/` 6%, `sound/` 4%, `fs/` 4%,
+  `Documentation/` 4%, `include/` 3.6%, `net/` 3.2%, `kernel/` 1.4%, `lib/` 0.8%, `mm/` 0.6%…
 
 ---
 layout: default

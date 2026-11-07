@@ -52,8 +52,9 @@ layout: default
   - **Flush/clean** cache lines when the CPU writes before starting a DMA transfer.
 - CPUs use virtual pointers (`void *`), but DMA controllers use `dma_addr_t` (physical, or
   IOMMU-mapped).
-- DMA buffers must be **physically contiguous**: use `kmalloc()` (≤128 KiB) or
-  `__get_free_pages()` (≤8 MB), **not** `vmalloc()`/`malloc()`.
+- DMA buffers must be **physically contiguous**: use `kmalloc()` or `__get_free_pages()` (both
+  physically contiguous up to the buddy allocator's max order, 4 MiB by default), **not**
+  `vmalloc()`/`malloc()`. For larger or coherent buffers use `dma_alloc_coherent()`.
 - Set the device's **DMA mask** with `dma_set_mask_and_coherent()`.
 
 ---

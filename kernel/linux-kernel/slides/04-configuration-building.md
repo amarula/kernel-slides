@@ -172,7 +172,8 @@ layout: default
 ---
 # xconfig and menuconfig
 
-- `make xconfig` — graphical interface, file browser, search with `Ctrl+F`. Needs `qtbase5-dev`.
+- `make xconfig` — graphical interface, file browser, search with `Ctrl+F`. Needs Qt6
+  (`qt6-base-dev`) or Qt5 (`qtbase5-dev`).
 - `make menuconfig` — terminal interface, very efficient; same interface as BusyBox/Buildroot.
   Needs `libncurses-dev`. Alternative: `make nconfig`.
 

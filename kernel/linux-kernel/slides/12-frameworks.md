@@ -168,8 +168,9 @@ input_report_rel(dev, REL_X, delta);
 input_sync(dev);
 ```
 
-- `evdev` user interface: each input device is `/dev/input/event<X>`; `read()` returns
-  `struct input_event { timeval time; unsigned short type, code; unsigned int value; }`.
+- `evdev` user interface: each input device is `/dev/input/event<X>`; `read()` returns a
+  `struct input_event`. On 64-bit, its timestamp is `__kernel_ulong_t __sec/__usec` (use the
+  `input_event_sec`/`input_event_usec` macros); `type`, `code` and `value` follow.
 - Test with `evtest`. Polled devices via `input_setup_polling()`.
 
 ---
@@ -637,16 +638,19 @@ hideInToc: true
 ```c
 struct devres {
     struct devres_node   node;
+    dr_release_t         release;   /* frees the resource payload */
     /* data[] is aligned with ARCH_DMA_MINALIGN so the whole
      * struct devres has the same alignment when kmalloc()ed */
     u8 __aligned(ARCH_DMA_MINALIGN) data[];
 };
 
+/* drivers/base/base.h */
 struct devres_node {
-    struct list_head  entry;
-    dr_release_t      release;   /* function that frees the resource */
-    const char        *name;     /* used for searching */
-    size_t            size;
+    struct list_head    entry;
+    dr_node_release_t   release;    /* node release callback */
+    dr_node_free_t      free_node;  /* frees the node itself */
+    const char         *name;       /* used for searching */
+    size_t              size;
 };
 ```
 
@@ -655,28 +659,25 @@ layout: default
 hideInToc: true
 ---
 
-# devres alloc, add, free
+# Devres usage example
 
-Simple driver example — SPI controller (`devres_alloc` → `devres_add`, or `devres_free`):
+Simple driver example — SPI controller (current code uses `devm_add_action_or_reset()`):
 
 ```c
 struct spi_controller *__devm_spi_alloc_controller(struct device *dev,
-                                                   unsigned int size, bool slave)
+                                                   unsigned int size, bool target)
 {
-    struct spi_controller **ptr, *ctlr;
+    struct spi_controller *ctlr;
+    int ret;
 
-    ptr = devres_alloc(devm_spi_release_controller, sizeof(*ptr), GFP_KERNEL);
-    if (!ptr)
+    ctlr = __spi_alloc_controller(dev, size, target);
+    if (!ctlr)
         return NULL;
 
-    ctlr = __spi_alloc_controller(dev, size, slave);
-    if (ctlr) {
-        ctlr->devm_allocated = true;
-        *ptr = ctlr;
-        devres_add(dev, ptr);
-    } else {
-        devres_free(ptr);
-    }
+    ret = devm_add_action_or_reset(dev, devm_spi_release_controller, ctlr);
+    if (ret)
+        return NULL;
+
     return ctlr;
 }
 ```
@@ -697,7 +698,7 @@ void *__devres_alloc_node(dr_release_t release, size_t size, gfp_t gfp, int nid,
     dr = alloc_dr(release, size, gfp | __GFP_ZERO, nid);
     if (unlikely(!dr))
         return NULL;
-    set_node_dbginfo(&dr->node, name, size);
+    devres_set_node_dbginfo(&dr->node, name, size);
     return dr->data;
 }
 
@@ -717,8 +718,8 @@ static __always_inline struct devres *alloc_dr(dr_release_t release,
     if (!(gfp & __GFP_ZERO))       /* don't clear memory twice */
         memset(dr, 0, offsetof(struct devres, data));
 
-    INIT_LIST_HEAD(&dr->node.entry);
-    dr->node.release = release;
+    devres_node_init(&dr->node, dr_node_release, dr_node_free);
+    dr->release = release;
     return dr;
 }
 ```
@@ -734,11 +735,15 @@ hideInToc: true
 void devres_add(struct device *dev, void *res)
 {
     struct devres *dr = container_of(res, struct devres, data);
-    unsigned long flags;
 
-    spin_lock_irqsave(&dev->devres_lock, flags);
-    add_dr(dev, &dr->node);
-    spin_unlock_irqrestore(&dev->devres_lock, flags);
+    devres_node_add(dev, &dr->node);
+}
+
+void devres_node_add(struct device *dev, struct devres_node *node)
+{
+    guard(spinlock_irqsave)(&dev->devres_lock);
+
+    add_dr(dev, node);
 }
 
 static void add_dr(struct device *dev, struct devres_node *node)
@@ -763,7 +768,7 @@ void devres_free(void *res)
         struct devres *dr = container_of(res, struct devres, data);
 
         BUG_ON(!list_empty(&dr->node.entry));
-        kfree(dr);
+        free_dr(dr);
     }
 }
 ```
@@ -782,17 +787,16 @@ void *devres_remove(struct device *dev, dr_release_t release,
                     dr_match_t match, void *match_data)
 {
     struct devres *dr;
-    unsigned long flags;
 
-    spin_lock_irqsave(&dev->devres_lock, flags);
+    guard(spinlock_irqsave)(&dev->devres_lock);
     dr = find_dr(dev, release, match, match_data);
     if (dr) {
         list_del_init(&dr->node.entry);
         devres_log(dev, &dr->node, "REM");
+        return dr->data;
     }
-    spin_unlock_irqrestore(&dev->devres_lock, flags);
 
-    return dr ? dr->data : NULL;
+    return NULL;
 }
 ```
 
@@ -821,15 +825,19 @@ int devres_destroy(struct device *dev, dr_release_t release,
 }
 ```
 
-`destroy` = `remove` + `free`. Example caller:
+`destroy` = `remove` + `free`. Example caller (`devm_kfree()`):
 
 ```c
-void devm_usb_put_phy(struct device *dev, struct usb_phy *phy)
+void devm_kfree(struct device *dev, const void *p)
 {
-    int r;
+    int rc;
 
-    r = devres_destroy(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
-    dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
+    if (unlikely(is_kernel_rodata((unsigned long)p) || ZERO_OR_NULL_PTR(p)))
+        return;
+
+    rc = devres_destroy(dev, devm_kmalloc_release,
+                        devm_kmalloc_match, (void *)p);
+    WARN_ON(rc);
 }
 ```
 
@@ -867,25 +875,21 @@ hideInToc: true
 void *devres_open_group(struct device *dev, void *id, gfp_t gfp)
 {
     struct devres_group *grp;
-    unsigned long flags;
 
-    grp = kmalloc(sizeof(*grp), gfp);
+    grp = kmalloc_obj(*grp, gfp);
     if (unlikely(!grp))
         return NULL;
 
-    grp->node[0].release = &group_open_release;
-    grp->node[1].release = &group_close_release;
-    INIT_LIST_HEAD(&grp->node[0].entry);
-    INIT_LIST_HEAD(&grp->node[1].entry);
-    set_node_dbginfo(&grp->node[0], "grp<", 0);
-    set_node_dbginfo(&grp->node[1], "grp>", 0);
+    devres_node_init(&grp->node[0], &group_open_release, devres_group_free);
+    devres_node_init(&grp->node[1], &group_close_release, NULL);
+    devres_set_node_dbginfo(&grp->node[0], "grp<", 0);
+    devres_set_node_dbginfo(&grp->node[1], "grp>", 0);
     grp->id = grp;
     if (id)
         grp->id = id;
+    grp->color = 0;
 
-    spin_lock_irqsave(&dev->devres_lock, flags);
-    add_dr(dev, &grp->node[0]);
-    spin_unlock_irqrestore(&dev->devres_lock, flags);
+    devres_node_add(dev, &grp->node[0]);
     return grp->id;
 }
 ```

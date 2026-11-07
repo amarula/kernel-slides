@@ -68,7 +68,8 @@ layout: default
 
 - **No memory protection**: the kernel doesn't recover from illegal memory accesses — it dumps
   an *oops* on the console.
-- **Fixed-size stack** (8 or 4 KiB). Unlike user space, it cannot grow. **Don't use recursion!**
+- **Fixed-size stack** (8–16 KiB, architecture-dependent). Unlike user space, it cannot grow.
+  **Don't use recursion!**
 - **No swapping** of kernel memory (except tmpfs, which lives entirely in page cache/swap).
 
 ---

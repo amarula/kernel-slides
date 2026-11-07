@@ -133,17 +133,16 @@ layout: default
 - It works like any other bus, but devices are **enumerated statically** rather than discovered.
 
 ```c
-static struct platform_driver serial_imx_driver = {
-    .probe   = serial_imx_probe,
-    .remove  = serial_imx_remove,
-    .id_table = imx_uart_devtype,
-    .driver  = {
+static struct platform_driver imx_uart_platform_driver = {
+    .probe  = imx_uart_probe,
+    .remove = imx_uart_remove,          /* returns void */
+    .driver = {
         .name = "imx-uart",
         .of_match_table = imx_uart_dt_ids,
-        .pm   = &imx_serial_port_pm_ops,
+        .pm   = &imx_uart_pm_ops,
     },
 };
-module_platform_driver(serial_imx_driver);
+module_platform_driver(imx_uart_platform_driver);
 ```
 
 ---

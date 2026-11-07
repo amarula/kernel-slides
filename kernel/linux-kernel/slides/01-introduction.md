@@ -42,7 +42,8 @@ layout: default
 # System calls
 
 - The main interface between the kernel and user space is the set of **system calls**.
-- About **400 system calls** provide the main kernel services:
+- Around **400 system calls** (386 native x86-64 entries, plus 36 x32 entries) provide the main
+  kernel services:
   - File and device operations, networking, inter-process communication, process management,
     memory mapping, timers, threads, synchronization primitives…
 - The system call interface is wrapped by the **C library**; applications normally never make a

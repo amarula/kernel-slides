@@ -135,11 +135,13 @@ struct clk_core {
         const struct clk_ops    *ops;
         struct clk_hw           *hw;
         struct module           *owner;
+        struct device           *dev;
+        struct device_node      *of_node;
         struct clk_core         *parent;
-        const char              **parent_names;
-        struct clk_core         **parents;
+        struct clk_parent_map   *parents;
         u8                      num_parents;
         u8                      new_parent_index;
+        unsigned long           rate;
         [...]
 };
 ```
@@ -179,8 +181,9 @@ hideInToc: true
 # The Common Clock Framework
 
 - For each clock, only some callbacks must be provided.
-  - `prepare`/`unprepare` and `init` are mandatory; only clock gates can `enable`/`disable`;
-    a divider supports `set_rate`, etc.
+  - `prepare`/`unprepare` and `init` are optional; the mandatory set depends on the clock type
+    (see `Documentation/driver-api/clk.rst`). Only clock gates implement `enable`/`disable`;
+    a divider implements `set_rate`, etc.
 - Drivers populate the framework with clock nodes; specifying the parents list for each node
   generates the clock tree.
 - When a callback is called, the correct behavior is propagated through the tree.

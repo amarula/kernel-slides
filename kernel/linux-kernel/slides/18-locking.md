@@ -81,8 +81,9 @@ layout: default
 ---
 # Mutexes
 
-- The kernel's main locking primitive; a binary lock (counting semaphores exist but are rarely
-  used). The requester **blocks** when the lock is held → only usable where sleeping is allowed.
+- The kernel's main locking primitive; a **binary** lock. (Semaphores are counting locks and are
+  rarely used in new code.) The requester **blocks** when the lock is held → only usable where
+  sleeping is allowed.
 
 ```c
 #include <linux/mutex.h>
